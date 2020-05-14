@@ -1,4 +1,4 @@
 # fsu-proj
-fsuclass
+fsu class
 # Team Members
 Sam Anderson
