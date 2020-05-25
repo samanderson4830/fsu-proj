@@ -2,7 +2,7 @@
 FSU class
 
 # Team Members
-Sam Anderson
+Sam Anderson\n
 Michael Fogarty
 Joseph Fields
 Luis Corps
