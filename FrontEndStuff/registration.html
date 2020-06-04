@@ -6,20 +6,28 @@
     <title>BSN:Registration</title>
 </head>
 <body>
-    <!-- instead of <p> tags we can use <div> tags as well -->
+    <!-- Title header with business name, we can wrap this in an <a> tag to link to homepage -->
     <h1>Business Survey Analytics</h1>
     <h2>Register</h2>
+    <!-- Form will wrap all of these input elements into one package that we can eventually send to our server
+    on the backend of things -->
+    <!-- Most if not all fields are wrapped around <p> tags for spacing and <div> tags for styling later -->
     <form>
-        <label for="firstName">First Name:</label>
-        <input name="firstName" id="firstName" type="text" placeholder="Barry" required>
-        <label for="lasttName">Last Name:</label>
-        <input name="lastName" id="lastName" type="text" placeholder="Block" required>
+        <!-- Labels and inputs for name of user fields. Required field. -->
+        <div>
+            <label for="firstName">First Name:</label>
+            <input name="firstName" id="firstName" type="text" placeholder="Barry" required>
+            <label for="lasttName">Last Name:</label>
+            <input name="lastName" id="lastName" type="text" placeholder="Block" required>
+        </div> 
+        <!-- Labels and input for company name field-->
         <p>
             <div>
                 <label for="company">Company Name:</label>
                 <input name="companyName" id="companyName" type="text" placeholder="Company">
             </div>
         </p>
+        <!-- Labels and input for gender field *OPTIONAL IF WE WANT* -->
         <p>
             <div>
                 <label for="male">Male</label>
@@ -30,6 +38,8 @@
                 <input name="gender" id="other" type="radio" value="other">
             </div>
         </p>
+        <!-- Labels and input for email and password field. Both required, and password has a length validation
+        of 5-10 characters -->
         <p>
             <div>
                 <label for="email">Email:</label>
@@ -38,6 +48,7 @@
                 <input name="password" id="password" type="password" placeholder="password" pattern=".{5,10}" required title="Password must be 5 to 10 characters">
             </div>
         </p>
+        <!-- Labels and input for birthday field *OPTIONAL IF WE WANT* -->
         <p>  
             <div>  
             <label for="month">Birthday:</label>
@@ -95,9 +106,11 @@
             </select>
             </div>
         </p>
-        <div>
-            <p>I agree to the terms and conditions <input name="checkbox" type="checkbox"></p>
-        </div>
+        <!-- Labels and input for T&C field to be fancy *OPTIONAL IF WE WANT* -->
+        <p>
+            <div> I agree to the terms and conditions <input name="checkbox" type="checkbox"></div>
+        </p>
+        <!-- Submit button/input will send all data to server when backends figured out -->
         <input type="submit">
     </form>
 </body>
