@@ -1,0 +1,46 @@
+body{
+    background: rgb(63, 63, 151);
+    
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    border-style: solid;
+    border-color: white;
+    padding: 10px 100px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+ 
+}
+
+.Button{
+    background-color: rgb(63, 63, 151);
+    font-weight: 700;
+    border: solid;
+    border-color: rgb(87, 216, 255);
+    border-radius: 3cm;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 20px;
+    margin: 1px 1px;
+    cursor: pointer;
+    
+    
+}
+
+.Button:hover{
+    background-color:rgb(86, 86, 211);
+}
+
+.growthChart{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 25em;
+    height: 25em;
+}

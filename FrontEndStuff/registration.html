@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="author" content="Luis Corps">
     <title>BSN:Registration</title>
+    <!--Links the css style sheet-->
+    <link rel="stylesheet" href="css/registration.css">
 </head>
 <body>
     <!-- Title header with business name, we can wrap this in an <a> tag to link to homepage -->
     <h1>Business Survey Analytics</h1>
-    <h2>Register</h2>
+    <h2>New User Register</h2>
     <!-- Form will wrap all of these input elements into one package that we can eventually send to our server
     on the backend of things -->
     <!-- Most if not all fields are wrapped around <p> tags for spacing and <div> tags for styling later -->
     <form>
         <!-- Labels and inputs for name of user fields. Required field. -->
-        <div>
-            <label for="firstName">First Name:</label>
+        <div >
+            <label for="firstName" >First Name:</label>
             <input name="firstName" id="firstName" type="text" placeholder="Barry" required>
             <label for="lasttName">Last Name:</label>
             <input name="lastName" id="lastName" type="text" placeholder="Block" required>
