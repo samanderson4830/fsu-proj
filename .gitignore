@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+# VSC
+.DS_Store
+# nodejs
+node_modules
