@@ -1,5 +1,5 @@
 # fsu-proj
-FSU class
+FSU class. This project utilizes NodeJS, Mysql to support a Suvery App for class
 
 # Team Members
 Sam Anderson
