@@ -6,114 +6,61 @@
     <title>BSN:Registration</title>
     <!--Links the css style sheet-->
     <link rel="stylesheet" href="css/registration.css">
+    <!-- Links font grabbed from google -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Title header with business name, we can wrap this in an <a> tag to link to homepage -->
     <h1>Business Survey Analytics</h1>
-    <h2>New User Register</h2>
+    <!-- Four buttons that make up the navigation bar of the website, s/o mike
+    for figuring out how these buttons work-->
+    <button onclick="window.location.href = 'homePage.html';" class = "Button">
+        Home
+    </button>
+    <button onclick="window.location.href = 'Login.html';" class = "Button">
+        Login
+    </button>
+    <button onclick="window.location.href = 'TakeSurvey.html';" class = "Button">
+        Take a Survey
+    </button>
+    <!-- Apparently in the html world it's frowned upon to have a link on a page to itself
+    so I have this button disbaled (it can't be clicked on), it's just here for 
+    continuity -->
+    <button class = "Button" disabled>
+        New User
+    </button>
+
+    <hr>
+
+    <h2>New User Registration</h2>
+
     <!-- Form will wrap all of these input elements into one package that we can eventually send to our server
     on the backend of things -->
     <!-- Most if not all fields are wrapped around <p> tags for spacing and <div> tags for styling later -->
     <form>
         <!-- Labels and inputs for name of user fields. Required field. -->
-        <div >
+        <div>
             <label for="firstName" >First Name:</label>
             <input name="firstName" id="firstName" type="text" placeholder="Barry" required>
             <label for="lasttName">Last Name:</label>
-            <input name="lastName" id="lastName" type="text" placeholder="Block" required>
-        </div> 
-        <!-- Labels and input for company name field-->
+            <input name="lastName" id="lastName" type="text" placeholder="Block" required> 
+        </div>
+        <!-- Label and input for company name field-->
         <p>
-            <div>
                 <label for="company">Company Name:</label>
-                <input name="companyName" id="companyName" type="text" placeholder="Company">
-            </div>
+                <input name="companyName" id="companyName" type="text" placeholder="Company" required>
         </p>
-        <!-- Labels and input for gender field *OPTIONAL IF WE WANT* -->
+        <!-- Label and input for email field. -->
         <p>
-            <div>
-                <label for="male">Male</label>
-                <input name="gender" id="male" type="radio" value="male">
-                <label for="female">Female</label>
-                <input name="gender" id="female" type="radio" value="female">
-                <label for="other">Other</label>
-                <input name="gender" id="other" type="radio" value="other">
-            </div>
-        </p>
-        <!-- Labels and input for email and password field. Both required, and password has a length validation
-        of 5-10 characters -->
-        <p>
-            <div>
-                <label for="email">Email:</label>
-                <input name="email" id="email" type="email" placeholder="user@domain.com" required> 
-                <label for="password">Password:</label> 
-                <input name="password" id="password" type="password" placeholder="password" pattern=".{5,10}" required title="Password must be 5 to 10 characters">
-            </div>
-        </p>
-        <!-- Labels and input for birthday field *OPTIONAL IF WE WANT* -->
-        <p>  
-            <div>  
-            <label for="month">Birthday:</label>
-            <select name="month" id="month">
-                <option value="01">January</option>
-                <option value="02">February</option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-            </select>
-            <select name="day" id="day">
-                <option>01</option>
-                <option>02</option>
-                <option>03</option>
-                <option>04</option>
-                <option>05</option>
-                <option>06</option>
-                <option>07</option>
-                <option>08</option>
-                <option>09</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                <option>13</option>
-                <option>14</option>
-                <option>15</option>
-                <option>16</option>
-                <option>17</option>
-                <option>18</option>
-                <option>19</option>
-                <option>20</option>
-                <option>21</option>
-                <option>22</option>
-                <option>23</option>
-                <option>24</option>
-                <option>25</option>
-                <option>26</option>
-                <option>27</option>
-                <option>28</option>
-                <option>29</option>
-                <option>30</option>
-                <option>31</option>
-            </select>
-            <select>
-                <option>1998</option>
-                <option>1997</option>
-                <option>1996</option>
-            </select>
-            </div>
-        </p>
+            <label for="email">Email:</label>
+            <input name="email" id="email" type="email" placeholder="user@domain.com" required>         </p>
         <!-- Labels and input for T&C field to be fancy *OPTIONAL IF WE WANT* -->
         <p>
-            <div> I agree to the terms and conditions <input name="checkbox" type="checkbox"></div>
+            I agree to the terms and conditions <input name="checkbox" type="checkbox">
         </p>
-        <!-- Submit button/input will send all data to server when backends figured out -->
-        <input type="submit">
+        <!-- Submit button/input will send all data to server when backends figured out.
+        Value attribute gives the button a customizable name. -->
+        <input type="submit" value="Registration">
     </form>
 </body>
 </html>

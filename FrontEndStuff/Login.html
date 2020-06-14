@@ -2,11 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="css/loginCSS.css">
+    <meta name="author" content="Luis Corps">
+    <title>BSN:Login</title>
+    <!--Links the css style sheet-->
+    <link rel="stylesheet" type ="text/css" href="css/loginCSS.css">
+    <!-- Links font grabbed from google -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Title header with business name, we can wrap this in an <a> tag to link to homepage -->
+    <h1>Business Survey Analytics</h1>
+    <!-- Four buttons that make up the navigation bar of the website, s/o mike
+    for figuring out how these buttons work-->
+    <button onclick="window.location.href = 'homePage.html';" class = "Button">
+        Home
+    </button>
+    <button class = "Button" disabled>
+        Login
+    </button>
+    <button onclick="window.location.href = 'TakeSurvey.html';" class = "Button">
+        Take a Survey
+    </button>
+    <!-- Apparently in the html world it's frowned upon to have a link on a page to itself
+    so I have this button disbaled (it can't be clicked on), it's just here for 
+    continuity -->
+    <button onclick="window.location.href = 'registration.html';" class = "Button">
+        New User
+    </button>
+
+    <hr>
+
+    <h2>Login</h2>
+
+    <!-- Form will wrap all of these input elements into one package that we can eventually send to our server
+    on the backend of things -->
+    <!-- Fields are wrapped around <p> tags for spacing and styling later -->
+    <form>
+        <p>
+            <label for="email">Email:</label>
+            <input name="email" id="email" type="email" placeholder="user@domain.com" required>        
+        </p>
+        
+        <!-- Submit button/input will send all data to server when backends figured out 
+        value attribute gives it a customizable name-->
+        <input type="submit" value="Send Code">
+    </form>
     
+    <form>
+        <p>
+            <label for="code">Code:</label>
+            <input name="code" id="code" type="password" placeholder="000000" required>        
+        </p>
+        
+        <input type="submit" value="Login">
+    </form>
 </body>
 </html>
