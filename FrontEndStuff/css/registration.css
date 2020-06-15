@@ -2,8 +2,8 @@ body{
     background: rgb(63, 63, 151);
     color: white;
     font-family: 'Exo 2', sans-serif;
-    text-align: center;
-    
+    font-size: 20px;
+    text-align: center;  
 }
 
 .Button {
@@ -17,7 +17,7 @@ body{
 	font-size:21px;
 	padding:8px 37px;
 	text-decoration:none;
-	text-shadow:0px 0px 7px #283966;
+    text-shadow:0px 0px 7px #283966;
 }
 .Button:hover {
 	background-color:#0821c4;
@@ -25,6 +25,14 @@ body{
 .Button:active {
 	position:relative;
 	top:1px;
+}
+
+div{
+    padding: 8px;
+}
+
+p{
+    padding: 10px;
 }
 
 hr {
@@ -35,12 +43,39 @@ hr {
 }
 
 form {
-    max-width: 500px;
+    max-width: 700px;
     width: 80%;
+    height: 300px;
     padding: 10px;
     background: #7892c2;
-    border: 1px solid #31d2de;
+    border: 3px ridge #31d2de;
     /* border-radius: 2%; */
     margin: 0 auto;
 }
+
+.submitButton {
+	box-shadow:inset 0px -1px 3px 0px #91b8b3;
+	background:linear-gradient(to bottom, #31d2de 5%, #3f3f97 100%);
+	background-color:#31d2de;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:12px;
+	font-weight:bold;
+	padding:11px 23px;
+	text-decoration:none;
+	text-shadow:0px 2px 0px #2b665e;
+}
+.submitButton:hover {
+	background:linear-gradient(to bottom, #3f3f97 5%, #31d2de 100%);
+	background-color:#3f3f97;
+}
+.submitButton:active {
+	position:relative;
+	top:1px;
+}
+
 
