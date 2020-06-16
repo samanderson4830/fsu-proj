@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Mike Fogarty">
     <title>Welcome to Homepage</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!--Links the css style sheet-->
+    <link rel="stylesheet" type ="text/css" href="css/homepage.css">
+    <!-- Links font grabbed from google -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
+</head>
 </head>
 <header>
-    <div class="container">
         <h1>Business Statistic Analytics</h1>
-    </div>
 </header>
 <body>
 
+    <!--"<nav>" holds all the navigation buttons. 
+        Notice, no "home" button because we are on homepage-->
     <nav>
         <button onclick="window.location.href = 'Login.html';" class = "Button">
             Login
@@ -24,6 +29,9 @@
             New User
         </button>
     </nav>
+
+    <!--"<hr>" for line break. Mainly to edit in CSS-->
+    <hr>
 
     <img src="images/growth_bar_chart.jpg" alt="growth_bar_chart" class="growthChart">
 </body>
