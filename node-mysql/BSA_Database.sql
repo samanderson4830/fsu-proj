@@ -35,12 +35,12 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`questions`(
     FOREIGN KEY(`survey_ID`) REFERENCES surveys_created(`survey_ID`));
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`answers`(
-    `Answer_ID` INT NOT NULL AUTO_INCREMENT, 
-    `Question_ID` INT NOT NULL, 
-    `Answer_String` VARCHAR(30) NOT NULL, 
-    `Answer_Order` INT NOT NULL, 
-    `Date_Time` TIMESTAMP NOT NULL, 
-    PRIMARY KEY(Answer_ID));
+    `answer_ID` INT NOT NULL AUTO_INCREMENT, 
+    `question_ID` INT NOT NULL, 
+    `answer_string` VARCHAR(30) NOT NULL, 
+    `answer_order` INT NOT NULL, 
+    `date_time` TIMESTAMP NOT NULL, 
+    PRIMARY KEY(`answer_ID`,`question_ID`));
 
 CREATE TABLE `BSA_Database`.`survey_results`(
     `result_ID` INT NOT NULL AUTO_INCREMENT, 
