@@ -1,8 +1,12 @@
-DROP DATABASE IF EXISTS BSA_Database;
-CREATE DATABASE BSA_Database;
+DROP SCHEMA IF EXISTS BSA_Database;
+CREATE SCHEMA BSA_Database;
 USE `BSA_Database`;
 
 DROP TABLE IF EXISTS `customers`;
+DROP TABLE IF EXISTS `answers`;
+DROP TABLE IF EXISTS `questions`;
+DROP TABLE IF EXISTS `survey_results`;
+DROP TABLE IF EXISTS `surveys_created`;
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`customers` (
   `customer_ID` INT NOT NULL AUTO_INCREMENT,
@@ -13,12 +17,48 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`customers` (
   PRIMARY KEY (`customer_ID`))
 ENGINE = InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS `BSA_Database`.`surveys_created`(
+    `survey_ID` INT NOT NULL AUTO_INCREMENT, 
+    `customer_ID` INT NOT NULL, 
+    `survey_name` VARCHAR(30) NOT NULL, 
+    `date_created` TIMESTAMP NOT NULL, 
+    PRIMARY KEY(`survey_ID`), 
+    FOREIGN KEY(`customer_ID`) REFERENCES customers(`customer_ID`));
+
+CREATE TABLE IF NOT EXISTS `BSA_Database`.`questions`(
+    `question_ID` INT NOT NULL AUTO_INCREMENT, 
+    `survey_ID` INT NOT NULL, 
+    `question_order` INT NOT NULL, 
+    `question_string` VARCHAR(100) NOT NULL, 
+    `date_time` TIMESTAMP NOT NULL, 
+    PRIMARY KEY(`question_ID`), 
+    FOREIGN KEY(`survey_ID`) REFERENCES surveys_created(`survey_ID`));
+
+CREATE TABLE IF NOT EXISTS `BSA_Database`.`answers`(
+    `answer_ID` INT NOT NULL AUTO_INCREMENT, 
+    `question_ID` INT NOT NULL, 
+    `answer_string` VARCHAR(30) NOT NULL, 
+    `answer_order` INT NOT NULL, 
+    `date_time` TIMESTAMP NOT NULL, 
+    PRIMARY KEY(`answer_ID`,`question_ID`));
+
+CREATE TABLE `BSA_Database`.`survey_results`(
+    `result_ID` INT NOT NULL AUTO_INCREMENT, 
+    `survey_ID` INT NOT NULL,
+    `answer_ID` INT NOT NULL, 
+    `taker_ID` INT NOT NULL, 
+    `is_done` BOOLEAN NOT NULL, 
+    `date_time` TIMESTAMP NOT NULL, 
+    PRIMARY KEY(`result_ID`), 
+    FOREIGN KEY(`survey_ID`) REFERENCES questions(`survey_ID`), 
+    FOREIGN KEY(`answer_ID`) REFERENCES answers(`answer_ID`));
+
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Customer Table
 -------------------------------------------------------------------------------*/
 
 
-INSERT  INTO `customers`(`email`,`thePassword`,`company_name`) VALUES 
+INSERT  INTO `customers`(`survey_ID`,`thePassword`,`company_name`) VALUES 
 ('HomeDepot123@gmail.com', 'Home123', 'Home Depot'),
 ('Microsoft@gmail.com', 'Microsoft123', 'Microsoft'),
 ('Wendys11@gmail.com', 'Wendys123', 'Wendys'),
@@ -28,6 +68,40 @@ INSERT  INTO `customers`(`email`,`thePassword`,`company_name`) VALUES
 ('Tesla@gmail.com', 'Tesla123', 'Tesla'),
 ('Spotify@gmail.com', 'Spotify123', 'Spotify'),
 ('Amazon@gmail.com', 'Amazon123', 'Amazon');
+
+/*-----------------------------------------------------------------------------
+-- Creating Default temporay Data for Surveys Created Table
+-------------------------------------------------------------------------------*/
+
+
+INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`date_created`) VALUES
+(1, 'Home Depot Performance Survey','2020-06-17 11:39:30'),
+(1, 'Home Depot Employee Survey','2020-03-04 05:30:29'),
+(2, 'Microsoft Vista Survey','2006-11-01 00:00:00'),
+(2, 'Is Bill Gates Cool?','2010-12-13 12:30:13'),
+(3, 'BACONATOR Review', '2008-01-01 01:01:01'),
+(4, 'Customer Survey','1978-02-02 06:54:29'),
+(5, 'How manly is your order?','2019-08-21 15:16:17'),
+(6, 'Did you flip your Blizzard?','2011-09-27 18:00:00'),
+(7, 'Rate X-AE-12\'s performance','2037-06-25 23:59:59'),
+(8, 'Spotify Survey','2015-11-02 08:31:00'),
+(9, 'Overlord Bezos Survey','2038-01-03 11:11:11');
+
+/*-----------------------------------------------------------------------------
+-- Creating Default temporay Data for Questions Table
+-------------------------------------------------------------------------------*/
+
+
+INSERT INTO `questions`(`survey_ID`,`question_order`,`question_string`, `date_time`) VALUES
+(19, 1,'How would you rate our performance today?', '2020-06-17 12:06:30'),
+(19, 2,'Did you find the tool you needed for the job?', '2020-06-17 12:06:30'),
+(19, 3,'Will you return to this Home Depot?', '2020-06-17 12:06:30'),
+(23, 1,'How much bacon do you estimate was on your burger (in lbs.)?', '2020-06-17 12:06:30'),
+(23, 2,'Did you enjoy to burger?', '2020-06-17 12:06:30'),
+(23, 3,'What else could the BACONATOR use to make it even better?', '2020-06-17 12:06:30'),
+(29, 1,'State your Amazon Birth Name', '2020-06-17 12:06:30'),
+(29, 2,'Have any of your neighbors expressed dissatisfaction?', '2020-06-17 12:06:30'),
+(29, 3,'Rate Overlod Bezos from 10 to 10', '2020-06-17 12:06:30');
 
 /*-----------------------------------------------------------------------------
 -- Creating all PROCEDURE
@@ -98,6 +172,5 @@ BEGIN
 END$$
 
 DELIMITER ;
-
 
 
