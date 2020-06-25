@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Mike Fogarty">
+    <title>BSA | Homepage</title>
+    <!--Links the css style sheet-->
+    <link rel="stylesheet" type ="text/css" href="homepage.css">
+    <!-- Links font grabbed from google -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
+</head>
+</head>
+<header>
+        <h1>Business Statistic Analytics</h1>
+</header>
+<body>
+
+    
+    <!--"<nav>" holds all the navigation buttons. 
+        Notice, no "home" button because we are on homepage-->
+    <nav>
+        <button onclick="window.location.href = 'Login';" class = "Button">
+            Login
+        </button>
+        <button onclick="window.location.href = 'TakeSurvey';" class = "Button">
+            Take a Survey
+        </button>
+        <button onclick="window.location.href = 'registration';" class = "Button">
+            New User
+        </button>
+    </nav>
+
+    <!--"<hr>" for line break. Mainly to edit in CSS-->
+    <hr>
+
+    <img src="growth_bar_chart.jpg" alt="growth_bar_chart" class="growthChart">
+
+    <%-include ('./footer')  %> 
+
+</body>
+</html>
