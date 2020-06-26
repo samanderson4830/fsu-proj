@@ -102,7 +102,7 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`date_created`) VALUES
 -------------------------------------------------------------------------------*/
 
 /*-----------------------------------------------------------------------------
---  PROCEDUREs to get information
+--  PROCEDUREs for customers table
 -------------------------------------------------------------------------------*/
 DROP PROCEDURE IF EXISTS `GetCustomersAll`;
 
@@ -116,7 +116,6 @@ END$$
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
-
 DROP PROCEDURE IF EXISTS `GetCustomersByID`;
 
 DELIMITER $$
@@ -127,8 +126,8 @@ BEGIN
 END$$
 
 DELIMITER ;
-/*-----------------------------------------------------------------------------*/
 
+/*-----------------------------------------------------------------------------*/
 DROP PROCEDURE IF EXISTS `GetCustomersByName`;
 
 DELIMITER $$
@@ -140,7 +139,6 @@ END$$
 
 DELIMITER ;
 /*-----------------------------------------------------------------------------*/
-
 DROP PROCEDURE IF EXISTS `GetCustomersByEmail`;
 
 DELIMITER $$
@@ -151,11 +149,8 @@ BEGIN
 END$$
 
 DELIMITER ;
-/*-----------------------------------------------------------------------------*/
 
-/*-----------------------------------------------------------------------------
---  PROCEDUREs to input information
--------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------*/
 DROP PROCEDURE IF EXISTS `AddCompany`;
 
 DELIMITER $$
@@ -166,5 +161,48 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+/*-----------------------------------------------------------------------------
+--  PROCEDUREs for surveys_created table
+-------------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetSurveyByID`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetSurveyByID` (IN sID INT)
+BEGIN
+   SELECT * FROM surveys_created WHERE survey_ID = sID;
+END$$
+
+DELIMITER ;
+/*-----------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetAllSurveysByCustomerID`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetAllSurveysByCustomerID` (IN cID INT)
+BEGIN
+   SELECT survey_name FROM surveys_created WHERE cID = customer_ID ;
+END$$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------
+--  PROCEDUREs for questions table
+-------------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetSurveyQuestions`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetSurveyQuestions` (IN sID INT)
+BEGIN
+   SELECT question_string FROM questions WHERE survey_ID = sID; 
+ 
+END$$
+
+DELIMITER ;
+/*-----------------------------------------------------------------------------*/
+
+
 
 
