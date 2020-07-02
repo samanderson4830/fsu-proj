@@ -167,6 +167,45 @@ BEGIN
 END$$
 
 DELIMITER ;
+/*-----------------------------------------------------------------------------
+--  PROCEDUREs for surveys_created table
+-------------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetSurveyByID`;
 
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetSurveyByID` (IN sID INT)
+BEGIN
+   SELECT * FROM surveys_created WHERE survey_ID = sID;
+END$$
 
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetAllSurveysByCustomerID`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetAllSurveysByCustomerID` (IN cID INT)
+BEGIN
+   SELECT survey_name FROM surveys_created WHERE cID = customer_ID ;
+END$$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------
+--  PROCEDUREs for questions table
+-------------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetSurveyQuestions`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetSurveyQuestions` (IN sID INT)
+BEGIN
+   SELECT question_string FROM questions WHERE survey_ID = sID; 
+ 
+END$$
+
+DELIMITER ;
+/*-----------------------------------------------------------------------------*/
 
