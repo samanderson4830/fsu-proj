@@ -37,7 +37,7 @@
     <!-- Form will wrap all of these input elements into one package that we can eventually send to our server
     on the backend of things -->
     <!-- Fields are wrapped around <p> tags for spacing and styling later -->
-    <form>
+    <form action ="/Login/goLogin", method="GET">
         <p>
             <label for="email">Email:</label>
             <input name="email" id="email" type="email" placeholder="user@domain.com" required>        
@@ -47,6 +47,10 @@
         value attribute gives it a customizable name-->
         <input class="submitButton" type="submit" value="Send Code">
     </form>
+    <script>   
+        var hideMessage = document.getElementById('hidden-DNE');
+    </script>
+    <h3 id= "hidden-DNE" class = "hidden-DNE" hidden>That email does not exist.</h3>
     
     <form>
         <p>

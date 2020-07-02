@@ -32,15 +32,16 @@
     
     <h2>Take a Survey</h2>
     <!--action is where to send data in form. method is how to send data-->
-    <form action = "" method="POST">
-        <p>
-            <label for="code">Survey Code:</label>
-            <input name="code" id="surveyCode" placeholder="000000" required>        
-        </p>
-        
-        <input class="submitButton" type="submit" value="Proceed">
-    </form>
     
+        <form action = "/TakeSurvey/survey" method="GET">
+            <p>
+                <label for="code">Survey Code:</label>
+                <input name="code" id="surveyCode" placeholder="000000" required>        
+            </p>
+            
+            <input class="submitButton" type="submit" value="Proceed">
+        </form>
+      
     <%-include ('./footer')  %>
 </body>
 </html>
