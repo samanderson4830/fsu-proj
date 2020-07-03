@@ -13,10 +13,9 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`customers` (
   `email` VARCHAR(100) NOT NULL,
   `thePassword` VARCHAR(45) NOT NULL,
   `company_name` VARCHAR(100) NOT NULL,
-    PRIMARY KEY (`customer_ID`),
-  UNIQUE INDEX `customer_ID_UNIQUE` (`customer_ID` ASC))
-
-ENGINE = InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`customer_ID`),
+  UNIQUE INDEX `customer_ID_UNIQUE` (`customer_ID` ASC)
+)ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`surveys_created`(
     `survey_ID` INT NOT NULL AUTO_INCREMENT, 
@@ -24,7 +23,11 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`surveys_created`(
     `survey_name` VARCHAR(30) NOT NULL, 
     `date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
     PRIMARY KEY(`survey_ID`), 
-    FOREIGN KEY(`customer_ID`) REFERENCES customers(`customer_ID`));
+    INDEX `idx.customer` (customer_ID),
+    CONSTRAINT `fk_customer_ID` 
+    FOREIGN KEY(`customer_ID`)
+    REFERENCES customers(`customer_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
+)ENGINE = InnoDB ;
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`questions`(
     `question_ID` INT NOT NULL AUTO_INCREMENT, 
@@ -33,86 +36,107 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`questions`(
     `question_string` VARCHAR(250) NOT NULL, 
     `date_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,  
     PRIMARY KEY(`question_ID`), 
-    FOREIGN KEY(`survey_ID`) REFERENCES surveys_created(`survey_ID`));
+    INDEX `idx.survey_ID` (survey_ID),
+    CONSTRAINT `fk_survey_ID` 
+    FOREIGN KEY(`survey_ID`) REFERENCES surveys_created(`survey_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
+)ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`answers`(
     `answer_ID` INT NOT NULL AUTO_INCREMENT, 
     `question_ID` INT NOT NULL, 
-    `answer_string` VARCHAR(30) NOT NULL, 
+    `answer_string` VARCHAR(100) NOT NULL, 
     `answer_order` INT NOT NULL, 
     `date_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY(`answer_ID`,`question_ID`));
+    PRIMARY KEY(`answer_ID`,`question_ID`)
+)ENGINE = InnoDB;
 
 CREATE TABLE `BSA_Database`.`survey_results`(
     `result_ID` INT NOT NULL AUTO_INCREMENT, 
     `survey_ID` INT NOT NULL,
     `answer_ID` INT NOT NULL, 
-    `taker_ID` INT NOT NULL, 
+    `taker_ID` INT NOT NULL , 
     `is_done` BOOLEAN NOT NULL, 
     `date_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
     PRIMARY KEY(`result_ID`), 
-    FOREIGN KEY(`survey_ID`) REFERENCES questions(`survey_ID`), 
-    FOREIGN KEY(`answer_ID`) REFERENCES answers(`answer_ID`));
+    INDEX `idx.answer_ID` (answer_ID),
+    CONSTRAINT `fk_answer_ID` 
+    FOREIGN KEY(`answer_ID`) REFERENCES answers(`answer_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
+)ENGINE = InnoDB;
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Customer Table
 -------------------------------------------------------------------------------*/
 
 INSERT  INTO `customers`(`email`,`thePassword`,`company_name`) VALUES 
-('HomeDepot123@gmail.com', 'Home123', 'Home Depot'),
-('Microsoft@gmail.com', 'Microsoft123', 'Microsoft'),
-('Wendys11@gmail.com', 'Wendys123', 'Wendys'),
-('Mcdonlads123@gmail.com', 'Mcdonlads123', 'Mcdonlads'),
-('Starbucks1@gmail.com', 'Starbucks123', 'Starkbucks'),
-('DairyQueen@gmail.com', 'Dairy123', 'Dairy Queen'),
-('Tesla@gmail.com', 'Tesla123', 'Tesla'),
-('Spotify@gmail.com', 'Spotify123', 'Spotify'),
-('Amazon@gmail.com', 'Amazon123', 'Amazon');
+('HomeDepot123@gmail.com', 'Home123',       'Home Depot'),
+('Microsoft@gmail.com',    'Microsoft123',  'Microsoft'),
+('Wendys11@gmail.com',     'Wendys123',     'Wendys'),
+('Mcdonlads123@gmail.com', 'Mcdonlads123',  'Mcdonlads'),
+('Starbucks1@gmail.com',   'Starbucks123',  'Starkbucks'),
+('DairyQueen@gmail.com',   'Dairy123',      'Dairy Queen'),
+('Tesla@gmail.com',        'Tesla123',      'Tesla'),
+('Spotify@gmail.com',      'Spotify123',    'Spotify'),
+('Amazon@gmail.com',       'Amazon123',     'Amazon');
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Surveys Created Table
 -------------------------------------------------------------------------------*/
 
 INSERT INTO `surveys_created`(`customer_ID`,`survey_name`) VALUES
-(1,'Home Depot Performance Survey'),
-(1,'Home Depot Employee Survey'),
-(2,'Microsoft Vista Survey'),
-(2,'Is Bill Gates Cool?'),
-(3,'BACONATOR Review'),
-(4,'Customer Survey'),
-(5,'How manly is your order?'),
-(6,'Did you flip your Blizzard?'),
-(7,'Rate X-AE-12\'s performance'),
-(8,'Spotify Survey'),
-(9,'Overlord Bezos Survey');
+(1,  'Home Depot Performance Survey'),
+(1,  'Home Depot Employee Survey'),
+(2,  'Microsoft Vista Survey'),
+(3,  'BACONATOR Review'),
+(4,  'Customer Survey'),
+(5,  'How manly is your order?'),
+(6,  'Did you flip your Blizzard?'),
+(7,  'Rate X-AE-12\'s performance'),
+(8,  'Spotify Survey'),
+(9,  'Overlord Bezos Survey');
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Questions Table
 -------------------------------------------------------------------------------*/
  INSERT INTO `questions`(`survey_ID`,`question_order`,`question_string`) VALUES
-(1,1,'How would you rate our performance today?'),
-(2,2,'Did you find the tool you needed for the job?'),
-(2,3,'Will you return to this Home Depot?'),
-(5,1,'How much bacon do you estimate was on your burger (in lbs.)?'),
-(5,2,'Did you enjoy to burger?'),
-(5,3,'What else could the BACONATOR use to make it even better?'),
-(11,1,'State your Amazon Birth Name'),
-(4,2,'Have any of your neighbors expressed dissatisfaction?'),
-(11,3,'Rate Overlod Bezos from 10 to 10');
+(1,  1,  'How would you rate our performance today?'),
+(1,  2,  'Will you return to this Home Depot?'),
+(2,  1,  'Do you enjoy working at Home Depot'),
+(3,  1,  'Do you like windows vista??'),
+(5,  1,  'How much bacon do you estimate was on your burger (in lbs.)?'),
+(5,  2,  'Did you enjoy to burger?'),
+(5,  3,  'What else could the BACONATOR use to make it even better?');
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Answers Table
 -------------------------------------------------------------------------------*/
- INSERT INTO `questions`(`survey_ID`,`question_order`,`question_string`) VALUES
-(1,1,'How would you rate our performance today?'),
-(2,2,'Did you find the tool you needed for the job?'),
-(2,3,'Will you return to this Home Depot?'),
-(5,1,'How much bacon do you estimate was on your burger (in lbs.)?'),
-(5,2,'Did you enjoy to burger?'),
-(5,3,'What else could the BACONATOR use to make it even better?'),
-(11,1,'State your Amazon Birth Name'),
-(4,2,'Have any of your neighbors expressed dissatisfaction?'),
-(11,3,'Rate Overlod Bezos from 10 to 10');
+ INSERT INTO `answers`(`question_ID`,`answer_string`, `answer_order`) VALUES
+-- Home Depot Performance Survey
+(1,    'Great', 1),
+(1,    'Good',  2),
+(1,    'ok',    3),
+(1,    'poor',  4),
+
+(2,    'YES ', 1),
+(2,    'NO',   2),
+
+-- Home Depot Employee Survey
+(3,    'Yes, home depot is great', 1),
+(3,    'No, I want a new job',     2),
+
+-- Windows Vista Survey
+(4,    'Yes, its great', 1),
+(4,    'No!',            2),
+
+-- BACONATOR Review
+(5,    'less than 1lb', 1),
+(5,    '1lb - 2lb'    , 2),
+(5,    'more than 3lb', 3),
+
+(6,    'Yes!',          1),
+(6,    'No!',           2),
+
+(7,    'More Bacon!',          1),
+(7,    'Nothing its great!',   2);
 
 /*-----------------------------------------------------------------------------
 -- Creating all PROCEDURE
@@ -247,11 +271,22 @@ DELIMITER ;
 /*-----------------------------------------------------------------------------
 --  PROCEDUREs for answers table
 -------------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetAnswersByQuestionID`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetAnswersByQuestionID` (IN qID INT)
+BEGIN
+   SELECT * FROM answers WHERE question_ID = qID; 
+ 
+END$$
+
+DELIMITER ;
+
 
 /*-----------------------------------------------------------------------------
 --  PROCEDUREs for survey_results table
 -------------------------------------------------------------------------------*/
-
 
 
 
