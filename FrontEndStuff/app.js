@@ -1,42 +1,19 @@
 const express = require('express');
 const morgan = require('morgan');
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
 
 const regRoutes = require('./routes/registrationRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const busRoutes = require('./routes/busRoutes');
 const createSurveyRoutes = require('./routes/createSurveyRoutes');
 const takeSurveyRoutes = require('./routes/takeSurveyRoutes');
-const bodyParser = require('body-parser');
-
-
-
-
-//create connetion
-const db = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'Pass12345',
-    database : 'BSA_Database'
-});
-
-// connect server to database
-db.connect ((err) => {
-    if(err)
-    {
-        throw err;
-    } else
-    {
-        console.log('MySQL connected ...');
-    }
-});
-
 
 //express app
-
 const app = express();
 
-//connect to mongoDB
+//create var object
+var obj = {};
 
 //register view engine
 app.set('view engine', 'ejs');
@@ -50,6 +27,7 @@ app.listen(3000,()=>{
 //static files - CSS and Images
 app.use(express.static('css'));
 app.use(express.static('images'));
+app.use(express.static('scripts'));
 app.use(express.urlencoded({extended:true})); // Used for sending chunk of data to database, used with the form data.
 app.use(bodyParser.json());
 
@@ -82,27 +60,17 @@ app.use('/busOwn', busRoutes);
 //create survey routes
 //app.use('/createSurvey', createSurveyRoutes);
 
-app.get ('/getCustomers',(req, res) => {
-    let sql = "call BSA_Database.GetSurveyQuestions('4')";
-    
-    db.query (sql, (err, result) => {
-        if (err)
-        {
-            throw err;
-        } else
-        {
-            console.log("Data found .....");
-            res.send(result);
-        }
-    });
-});
-
 //take survey routes
 app.use('/TakeSurvey', takeSurveyRoutes);
+
+//surveyPage routes
+
+app.get('/survey', (req, res) =>{
+
+    res.render('surveyPage');
+})
 
 //Redirect if no matches with above -> will show 404 error page
 app.use((req, res) => {
     res.status(404).render('404');
 })
-
-//***********End of redirects*********************/
