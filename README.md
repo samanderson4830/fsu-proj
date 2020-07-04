@@ -12,3 +12,5 @@ Trey Hamilton
 packages:
 	express
 	morgan
+	ejs
+	mysql
