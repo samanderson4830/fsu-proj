@@ -1,0 +1,75 @@
+*,*::before, *::after{
+    box-sizing: border-box;
+}
+
+h1{
+    color: rgb(255, 255, 255);
+    font-family: 'Exo 2', sans-serif;
+    display: flex;
+    position: fixed;
+    top: 1vw;
+    
+}
+
+body{
+    background: rgb(63, 63, 151);
+    color: rgb(0, 0, 0);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    height: 50vw;  
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.questionBox{
+    width: 800px;
+    max-width: 50%;
+    background-color:rgb(166, 166, 233);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px 2px;
+    text-align: center;
+    
+}
+
+.btn-grid{
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    gap: 10px;
+    margin: 20px 0;
+
+}
+
+.btn{
+    background-color: rgb(0, 43, 233);
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: white;
+    outline: none;
+}
+
+.btn:hover{
+    border-color: rgb(255, 251, 0);
+}
+
+.start-btn, .next-btn .thank-btn {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 8px 8px;
+}
+
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide{
+    display: none;
+}
