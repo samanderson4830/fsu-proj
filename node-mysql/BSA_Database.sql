@@ -237,7 +237,7 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetSurveyQuestions` (IN sID INT)
 BEGIN
-   SELECT question_string FROM questions WHERE survey_ID = sID; 
+   SELECT question_string, question_order FROM questions WHERE survey_ID = sID; 
  
 END$$
 
