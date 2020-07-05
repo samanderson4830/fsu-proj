@@ -283,10 +283,50 @@ END$$
 
 DELIMITER ;
 
+/*-----------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `AddAnswer`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `AddAnswer` (IN qID INT, IN aOrder INT, IN aString VARCHAR(100) )
+BEGIN
+   INSERT INTO answers (question_ID, answer_order, answer_string) VALUES (qID, aOrder, aString);
+ 
+END$$
+
+DELIMITER ;
+
 
 /*-----------------------------------------------------------------------------
 --  PROCEDUREs for survey_results table
 -------------------------------------------------------------------------------*/
 
+/*-----------------------------------------------------------------------------
+--  All Functions 
+-------------------------------------------------------------------------------*/
+DROP FUNCTION IF EXISTS `ValidLogin`;
 
+DELIMITER $$
+CREATE FUNCTION `ValidLogin` (cEmail VARCHAR(100))  RETURNS BOOL DETERMINISTIC
+BEGIN
+      # email exists flag
+      DECLARE is_valid BOOLEAN DEFAULT FALSE;
+
+      # email count will be 1 if true
+      DECLARE email_count INT DEFAULT 0;
+
+      # check for exsiting email in customer table 
+            SELECT COUNT(1) INTO email_count
+            FROM  `customers`
+            WHERE email = cEmail;
+
+            # set if email exists
+            IF email_count = 1 THEN
+                  SET is_valid = TRUE;
+            END IF;
+
+      RETURN is_valid;
+END $$
+
+DELIMITER ;
 
