@@ -11,6 +11,8 @@ DROP TABLE IF EXISTS `surveys_created`;
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`customers` (
   `customer_ID` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(100) NOT NULL,
+  `first_name` VARCHAR(50),
+  `last_name` VARCHAR(50) ,
   `thePassword` VARCHAR(45) NOT NULL,
   `company_name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`customer_ID`),
@@ -67,16 +69,16 @@ CREATE TABLE `BSA_Database`.`survey_results`(
 -- Creating Default temporay Data for Customer Table
 -------------------------------------------------------------------------------*/
 
-INSERT  INTO `customers`(`email`,`thePassword`,`company_name`) VALUES 
-('HomeDepot123@gmail.com', 'Home123',       'Home Depot'),
-('Microsoft@gmail.com',    'Microsoft123',  'Microsoft'),
-('Wendys11@gmail.com',     'Wendys123',     'Wendys'),
-('Mcdonlads123@gmail.com', 'Mcdonlads123',  'Mcdonlads'),
-('Starbucks1@gmail.com',   'Starbucks123',  'Starkbucks'),
-('DairyQueen@gmail.com',   'Dairy123',      'Dairy Queen'),
-('Tesla@gmail.com',        'Tesla123',      'Tesla'),
-('Spotify@gmail.com',      'Spotify123',    'Spotify'),
-('Amazon@gmail.com',       'Amazon123',     'Amazon');
+INSERT  INTO `customers`(`email`,`thePassword`,`company_name`, `first_name`, `last_name`) VALUES 
+('HomeDepot123@gmail.com', 'Home123',       'Home Depot', 'Jamis', 'Winston'),
+('Microsoft@gmail.com',    'Microsoft123',  'Microsoft',   NULL,    NULL),
+('Wendys11@gmail.com',     'Wendys123',     'Wendys',      NULL,    NULL),
+('Mcdonlads123@gmail.com', 'Mcdonlads123',  'Mcdonlads',   NULL,    NULL),
+('Starbucks1@gmail.com',   'Starbucks123',  'Starkbucks',  NULL,    NULL),
+('DairyQueen@gmail.com',   'Dairy123',      'Dairy Queen', NULL,    NULL),
+('Tesla@gmail.com',        'Tesla123',      'Tesla',       NULL,    NULL),
+('Spotify@gmail.com',      'Spotify123',    'Spotify',     NULL,    NULL),
+('Amazon@gmail.com',       'Amazon123',     'Amazon',      NULL,    NULL);
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Surveys Created Table
@@ -232,9 +234,12 @@ DROP PROCEDURE IF EXISTS `AddCompany`;
 
 DELIMITER $$
 USE `BSA_Database`$$
-CREATE PROCEDURE `AddCompany` (IN cEmail VARCHAR(100), IN cPassword VARCHAR(45), IN cName VARCHAR(100) )
+CREATE PROCEDURE `AddCompany` (IN cEmail VARCHAR(100), IN cPassword VARCHAR(45), 
+						       IN cName VARCHAR(100),  IN fName VARCHAR(100),
+                               IN lName VARCHAR(100) )
 BEGIN
-   INSERT INTO customers (Email, thePassword, company_name) VALUES (cEmail, cPassword, cName);
+   INSERT INTO customers (Email, thePassword, company_name, first_name, last_name) 
+   VALUES (cEmail, cPassword, cName, fName, lName);
 END$$
 
 DELIMITER ;
