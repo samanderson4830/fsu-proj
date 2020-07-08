@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const regRoutes = require('./routes/registrationRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const busRoutes = require('./routes/busRoutes');
-const createSurveyRoutes = require('./routes/createSurveyRoutes');
+//const createSurveyRoutes = require('./routes/createSurveyRoutes');
 const takeSurveyRoutes = require('./routes/takeSurveyRoutes');
 
 //express app

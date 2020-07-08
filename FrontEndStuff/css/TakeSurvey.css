@@ -8,7 +8,6 @@ body{
 
 h1{
     color: white; text-decoration: none;
-    
 }
 a:link{
     text-decoration: none;
@@ -20,11 +19,11 @@ a:visited{
 
 a:hover {
     text-decoration: none;
-  }
+}
   
   a:active {
     text-decoration: none;
-  }
+}
 
 .Button {
 	background-color:#7892c2;
@@ -96,4 +95,45 @@ form {
 .submitButton:active {
 	position:relative;
 	top:1px;
+}
+
+#surveyIntro {
+	text-align: left;
+	margin: 0;
+	letter-spacing : 1px;
+}
+
+#currentSurveys {
+	/* text-align: center; */
+	width: 40%;
+	float: left;
+	margin-left: 10%;
+	margin-right: 5%;
+	margin-bottom: 2.5%;
+}
+
+.currentSurvey {
+	border-left: solid 4px #31d2de;
+	background: #7892c2;
+	margin-bottom: 1.5%;
+	margin-top: 1.5%;
+	
+}
+.currentSurvey:hover {
+	border: ridge 5px #31d2de;
+}
+
+#newSurvey {
+	width: 40%;
+	margin-left: 55%;
+	margin-top:4.5%;
+	position: fixed;
+}
+
+#createSurveyButton {
+	font-size: 30px;
+}
+
+strong {
+	text-decoration: underline;
 }
