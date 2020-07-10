@@ -1,0 +1,24 @@
+<html><body>
+    <table border="1" cellpadding="7" cellspacing="7">
+        <tr>
+            <th width="50px">No.</th>
+            <th>Survey ID</th>
+            <th>Question Order</th>
+            <th>Question String</th>
+        </tr>
+        <% if (data.length) {
+            for (var i = 0;i < data.length;i++) {%>
+            <tr>
+                <td><%=(i+1)%></td>
+                <td><%=data[i].survey_ID%></td>
+                <td><%=data[i].question_order%></td>
+                <td><%=data[i].question_string%></td>
+            </tr>
+        <% }
+        }else { %>
+        <tr>
+            <td colspan="3">No questions</td>
+        </tr>
+    <% } %>
+    </table>
+</body></html>

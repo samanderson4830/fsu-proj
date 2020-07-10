@@ -1,6 +1,8 @@
 const express = require('express');
 const mysql = require ('mysql');
 
+var questions = require('../../FrontEndStuff/routes/QuestionTableRoute');
+
 // //enviorment variables from fsurun.sh 
 // const port  = process.env.BSA_PORT;
 // const vhost = process.env.BSA_HOST;
@@ -118,6 +120,8 @@ app.get ('/getCustomersByEmail/:email',(req, res) => {
         }
     });
 });
+
+//app.get ('/questions', questions.list);
 
 
 
