@@ -104,9 +104,9 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`) VALUES
 (1,  2,  'Will you return to this Home Depot?'),
 (2,  1,  'Do you enjoy working at Home Depot'),
 (3,  1,  'Do you like windows vista??'),
-(5,  1,  'How much bacon do you estimate was on your burger (in lbs.)?'),
-(5,  2,  'Did you enjoy to burger?'),
-(5,  3,  'What else could the BACONATOR use to make it even better?');
+(4,  1,  'How much bacon do you estimate was on your burger (in lbs.)?'),
+(4,  2,  'Did you enjoy to burger?'),
+(4,  3,  'What else could the BACONATOR use to make it even better?');
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Answers Table
@@ -152,10 +152,10 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`) VALUES
  INSERT INTO `survey_results`(`taker_ID`,`survey_ID`,`answer_ID`, `is_done`) VALUES
 -- Home Depot Performance Survey Answers / Has (2) questions
 (1,      1,     2,     NULL),  # new taker 1
-(1,      1,     1,     true),
+(1,      1,     3,     true),
 
-(2,      1,     2,     NULL),  # new taker 2
-(2,      1,     2,     true),
+(2,      1,     1,     NULL),  # new taker 2
+(2,      1,     4,     true),
 
 -- Home Depot Employee Survey Answers / Has (1) question
 (3,      2,    7,     true),   # new taker 3
@@ -164,17 +164,17 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`) VALUES
 
 -- Windows Vista Survey Answers / Has (1) question
 (6,      3,    9,     true),   # new taker 6
-(7,      4,    10,    true),   # new taker 7
-(8,      5,    9,     true),   # new taker 8
+(7,      3,    10,    true),   # new taker 7
+(8,      3,    9,     true),   # new taker 8
 
 -- BACONATOR Review Survey Answers / Has (3) question
-(9,      3,    11,    NULL),   # new taker 9
+(9,      4,    11,    NULL),   # new taker 9
 (9,      4,    15,    NULL),   
-(9,      5,    16,    true),   
+(9,      4,    16,    true),   
 
-(10,     3,    12,    NULL),   # new taker 10
+(10,     4,    12,    NULL),   # new taker 10
 (10,     4,    14,    NULL),   
-(10,     5,    16,    true); 
+(10,     4,    16,    true); 
 
 /*-----------------------------------------------------------------------------
 -- Creating all PROCEDURE
@@ -464,7 +464,9 @@ BEGIN
 	  DECLARE done BOOLEAN DEFAULT FALSE;
       
 	  # set values of num 
-			SELECT question_order INTO num FROM questions WHERE question_ID = qID; 
+			SELECT question_order INTO num
+            FROM questions 
+            WHERE question_ID = qID; 
             
 	  # if last question is being answered and question exits
 			IF num = total && num != -1 THEN
@@ -472,6 +474,67 @@ BEGIN
 			END IF;
       
       RETURN done;
+END $$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+DROP FUNCTION IF EXISTS `TotalSurveys`;
+
+DELIMITER $$
+CREATE FUNCTION `TotalSurveys` (cID INT) RETURNS INT DETERMINISTIC
+BEGIN
+      # variables 
+      DECLARE total INT DEFAULT -1;
+      
+            SELECT COUNT(survey_ID) INTO total
+            FROM  `surveys_created`
+            WHERE customer_ID = cID;
+            
+	  # total num of surveys from a customer
+      RETURN total;
+END $$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+DROP FUNCTION IF EXISTS `TakenSurvey`;
+
+DELIMITER $$
+CREATE FUNCTION `TakenSurvey` (sID INT) RETURNS INT DETERMINISTIC
+BEGIN
+      # variables 
+      DECLARE total INT DEFAULT -1;
+   
+            SELECT COUNT(taker_ID) INTO total
+            FROM  `survey_results`
+            WHERE survey_ID = sID;
+            
+      SET total =  total / TotalQuestions (sID) ;     
+	  # total num of surveys from a customer
+      RETURN total;
+END $$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+DROP FUNCTION IF EXISTS `PickedChoice`;
+
+DELIMITER $$
+CREATE FUNCTION `PickedChoice` (aID INT, sID INT) RETURNS DOUBLE DETERMINISTIC
+BEGIN
+      # variable must be a double
+      DECLARE total DOUBLE DEFAULT -1;
+      DECLARE d DOUBLE DEFAULT TakenSurvey (sID);
+      
+   
+            SELECT COUNT(taker_ID) INTO total
+            FROM  `survey_results`
+            WHERE answer_ID = aID;
+            
+      SET total =  total / d;     
+	  # precent of survey takers that selected an answer
+      RETURN total;
 END $$
 
 DELIMITER ;
