@@ -276,9 +276,11 @@ DROP PROCEDURE IF EXISTS `GetSurveyQuestions`;
 
 DELIMITER $$
 USE `BSA_Database`$$
-CREATE PROCEDURE `GetSurveyQuestions` (IN sID INT)
+CREATE PROCEDURE `GetSurveyQuestions` (IN qID INT)
 BEGIN
-   SELECT question_string, question_order FROM questions WHERE survey_ID = sID; 
+   SELECT question_string, answer_string
+   FROM questions JOIN answers 
+   ON questions.question_ID = qID && answers.question_ID = questions.question_ID; 
  
 END$$
 
