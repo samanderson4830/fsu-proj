@@ -1,3 +1,4 @@
+  
 DROP SCHEMA IF EXISTS BSA_Database;
 CREATE SCHEMA BSA_Database;
 USE `BSA_Database`;
@@ -253,6 +254,18 @@ USE `BSA_Database`$$
 CREATE PROCEDURE `GetSurveyByID` (IN sID INT)
 BEGIN
    SELECT * FROM surveys_created WHERE survey_ID = sID;
+END$$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetSurveyCustomerByID`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetSurveyCustomerByID` (IN cID INT)
+BEGIN
+   SELECT * FROM surveys_created WHERE customer_ID = cID;
 END$$
 
 DELIMITER ;
