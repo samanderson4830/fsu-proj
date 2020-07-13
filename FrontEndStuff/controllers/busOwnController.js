@@ -1,8 +1,13 @@
 //const Customer = require("../models/customer");
+const mysql = require('mysql');
+const db = require('../models/db_connection');
+const { render } = require('ejs');
 
 const bus_own_page = (req,res) => {
+
     res.render('businessOwnerLogin');
 }
+
 
 // const login_new = (req, res) => {
    

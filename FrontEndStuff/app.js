@@ -14,6 +14,8 @@ const app = express();
 
 //create var object
 var obj = {};
+//created a company name variable to be used in busOwn ejs file
+var companyName;
 
 //register view engine
 app.set('view engine', 'ejs');

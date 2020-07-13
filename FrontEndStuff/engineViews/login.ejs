@@ -37,7 +37,7 @@
     <!-- Form will wrap all of these input elements into one package that we can eventually send to our server
     on the backend of things -->
     <!-- Fields are wrapped around <p> tags for spacing and styling later -->
-    <form action ="/Login/goLogin", method="GET">
+    <form action ="/Login/goLogin", method="POST">
         <p>
             <label for="email">Email:</label>
             <input name="email" id="email" type="email" placeholder="user@domain.com" required>        
@@ -47,8 +47,8 @@
             <input name="code" id="code" type="password" placeholder="************" required>        
         </p>
         <!-- Submit button/input will send all data to server when backends figured out 
-        value attribute gives it a customizable name-->
-        <input class="submitButton" onclick="window.location.href = 'busOwn';" type="submit" value="Login">
+        value attribute gives it a customizable name, onclick="window.location.href = 'busOwn';"-->
+        <input class="submitButton" type="submit" value="Login">
     </form>
     <script>   
         var hideMessage = document.getElementById('hidden-DNE');
