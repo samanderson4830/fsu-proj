@@ -48,35 +48,15 @@
         <!-- Below will be JS, specifically a loop for the template to print 
         out the list created in the controller from the database's survey list for
         the account -->
-    <p id="surveyIntro">Here are your current surveys:</p>
-    <div class = "currentSurvey">
-        <p> <strong> Survey Title </strong> </p>
-        <p> Quick description of survey </p>
-    </div>
-    <div class = "currentSurvey">
-        <p> <strong> Survey Title </strong> </p>
-        <p> Quick description of survey </p>
-    </div>
-    <div class = "currentSurvey">
-        <p> <strong> Survey Title </strong> </p>
-        <p> Quick description of survey </p>
-    </div>
-    <div class = "currentSurvey">
-        <p> <strong> Survey Title </strong> </p>
-        <p> Quick description of survey </p>
-    </div>
-    <div class = "currentSurvey">
-        <p> <strong> Survey Title </strong> </p>
-        <p> Quick description of survey </p>
-    </div>
-    <div class = "currentSurvey">
-        <p> <strong> Survey Title </strong> </p>
-        <p> Quick description of survey </p>
-    </div>
-    <!--  surveyList.forEach(function(survey) { 
-        
-      }); -->
+    <p class="surveyIntro" ><%= fullName %>,</p>
+    <p class="surveyIntro">Here are your current surveys:</p>
 
+<%  surveyNames.forEach(function(survey) { %>
+    <div class = "currentSurvey">
+        <p> <strong> <%= survey %> </strong> </p>
+        <p> Quick description of survey </p>
+    </div>
+<%  }); %>
 
     </div>
 

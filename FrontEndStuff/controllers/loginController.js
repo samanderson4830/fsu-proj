@@ -9,12 +9,30 @@ const login_page = (req,res) => {
 }
 
 const login_new = function(req, res) {
+    // Grabbing email from input tag and storing into emailInput variable
     var emailInput = req.body.email;
+    // Calling the GetCustomersByEmail procedure from the Database and passing in emailInput 
     db.query("CALL GetCustomersByEmail(?)", [emailInput], function(err, result){
         if(err) throw err;
         else {
-            console.log(result[0]);
+            console.log(result[0]); //test result
+            //these three variable are defined globally in app.js and then defined with data grabbed from results
             companyName = result[0][0].company_name.toString();
+            fullName = result[0][0].first_name + " " + result[0][0].last_name;
+            customerID = result[0][0].customer_ID;
+
+            //Calling the GetSurveyCustomerByID procedure from the Database and passing in customerID
+            db.query("CALL GetSurveyCustomerByID(?)", [customerID], function(err, result){
+                if(err) throw err;
+                else {
+                    //Creating an empty array to push whatever amount of surveys account has
+                    surveyNames = [];
+                    result[0].forEach(function(survey){
+                        surveyNames.push(survey.survey_name);
+                    }); 
+                }
+            });
+            //After post request we redirect to businessOWnerLogin where variables are used on template
             res.redirect("/busOwn");
         }
     });
