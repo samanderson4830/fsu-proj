@@ -7,7 +7,7 @@
     <meta name="author" content="FrontEnd-BSA">
     <title>BSA | Create a Survey</title>
         <!--Links the css style sheet-->
-        <!-- <link rel="stylesheet" type ="text/css" href="TakeSurvey.css"> -->
+        <link rel="stylesheet" type ="text/css" href="createSurvey.css">
         <!-- Links font grabbed from google -->
         <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
        
@@ -15,24 +15,29 @@
 
 <header>
        <!-- Title header with business name, we can wrap this in an <a> tag to link to homepage -->
-        <a href="homePage"><h1>Business Survey Analytics</h1></a>
+        <a href="busOwn"><h1>Business Survey Analytics</h1></a>
         <!-- Four buttons that make up the navigation bar of the website-->
-        <button onclick="window.location.href = 'homePage';" class = "Button">
+        <button onclick="window.location.href = 'busOwn';" class = "Button">
             Home
         </button>
-        <button onclick="window.location.href = 'Login';"  class = "Button" >
-            Login
-        </button>
-        <button class = "Button" disabled>
+        <button onclick="window.location.href = 'createSurvey';" class = "Button">
             Take a Survey
-        </button>
-        <button onclick="window.location.href = 'registration';" class = "Button">
-            New User
         </button>
         <hr>
 </header>
 
 <body>
+    <h2>New Survey</h2>
+    <div>
+        <label for="surveyTitle">
+            Survey Title:
+        </label>
+        <p><input type="text" id="surveyTitle" name="surveyTitle" placeholder="Survey Title"></p>
+        <label for="surveyDescription">
+            Survey Description:
+        </label>
+        <p><input type="text" id="surveyDescription" name="surveyDescription" placeholder="Survey Description"></p>
+    </div>
 
 </body>
 
