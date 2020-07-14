@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`questions`(
     PRIMARY KEY(`question_ID`), 
     INDEX `idx.survey_ID` (survey_ID),
     CONSTRAINT `fk_survey_ID` 
-    FOREIGN KEY(`survey_ID`) REFERENCES surveys_created(`survey_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
+    FOREIGN KEY(`survey_ID`)
+    REFERENCES surveys_created(`survey_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
 )ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`answers`(
@@ -50,7 +51,10 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`answers`(
     `answer_string` VARCHAR(100) NOT NULL, 
     `answer_order` INT NOT NULL, 
     `date_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY(`answer_ID`,`question_ID`)
+    PRIMARY KEY(`answer_ID`,`question_ID`),
+    FOREIGN KEY(`question_ID`)
+    REFERENCES questions(`question_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
+
 )ENGINE = InnoDB;
 
 
@@ -63,7 +67,8 @@ CREATE TABLE `BSA_Database`.`survey_results`(
 	KEY (`taker_ID`, survey_ID),
     INDEX `idx.answer_ID` (answer_ID),
     CONSTRAINT `fk_answer_ID` 
-    FOREIGN KEY(`answer_ID`) REFERENCES answers(`answer_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
+    FOREIGN KEY(`answer_ID`) 
+    REFERENCES answers(`answer_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
 )ENGINE = InnoDB;
 
 /*-----------------------------------------------------------------------------
@@ -285,16 +290,29 @@ DELIMITER ;
 /*-----------------------------------------------------------------------------
 --  PROCEDUREs for questions table
 -------------------------------------------------------------------------------*/
-DROP PROCEDURE IF EXISTS `GetSurveyQuestions`;
+DROP PROCEDURE IF EXISTS `GetSurveyQuestion`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetSurveyQuestions` (IN qID INT)
 BEGIN
-   SELECT question_string, answer_string
-   FROM questions JOIN answers 
-   ON questions.question_ID = qID && answers.question_ID = questions.question_ID; 
- 
+   SELECT question_string
+   FROM questions 
+   WHERE questions.question_ID = qID;
+END$$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetSurveyAnswers`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetSurveyAnswers` (IN qID INT)
+BEGIN
+   SELECT answer_string
+   FROM answers 
+   WHERE answers.question_ID = qID;
 END$$
 
 DELIMITER ;
@@ -339,6 +357,7 @@ BEGIN
 END$$
 
 DELIMITER ;
+
 /*-----------------------------------------------------------------------------*/
 DROP PROCEDURE IF EXISTS `GetAnswerStringByID`;
 
