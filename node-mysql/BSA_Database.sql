@@ -1,4 +1,3 @@
-  
 DROP SCHEMA IF EXISTS BSA_Database;
 CREATE SCHEMA BSA_Database;
 USE `BSA_Database`;
@@ -22,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`customers` (
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`surveys_created`(
     `survey_ID` INT NOT NULL AUTO_INCREMENT, 
+    `quick_description` VARCHAR(100), 
     `customer_ID` INT NOT NULL, 
     `survey_name` VARCHAR(30) NOT NULL, 
     `date_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
@@ -195,7 +195,8 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetCustomersAll` ()
 BEGIN
-	SELECT * FROM customers;
+	SELECT * 
+    FROM customers;
 END$$
 
 DELIMITER ;
@@ -207,7 +208,9 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetCustomersByID` (IN cID INT)
 BEGIN
-   SELECT * FROM customers WHERE customer_ID = cID;
+   SELECT * 
+   FROM customers 
+   WHERE customer_ID = cID;
 END$$
 
 DELIMITER ;
@@ -219,7 +222,9 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetCustomersByName` (IN cName VARCHAR(100) )
 BEGIN
-   SELECT * FROM customers WHERE company_name = cName;
+   SELECT * 
+   FROM customers 
+   WHERE company_name = cName;
 END$$
 
 DELIMITER ;
@@ -231,7 +236,9 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetCustomersByEmail` (IN cEmail VARCHAR(100) )
 BEGIN
-   SELECT * FROM customers WHERE email = cEmail;
+   SELECT * 
+   FROM customers 
+   WHERE email = cEmail;
 END$$
 
 DELIMITER ;
@@ -258,7 +265,9 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetSurveyByID` (IN sID INT)
 BEGIN
-   SELECT * FROM surveys_created WHERE survey_ID = sID;
+   SELECT * 
+   FROM surveys_created 
+   WHERE survey_ID = sID;
 END$$
 
 DELIMITER ;
@@ -270,7 +279,23 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetSurveyCustomerByID` (IN cID INT)
 BEGIN
-   SELECT * FROM surveys_created WHERE customer_ID = cID;
+   SELECT * 
+   FROM surveys_created
+   WHERE customer_ID = cID;
+END$$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetDescription`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetDescription` (IN sID INT)
+BEGIN
+   SELECT quick_description 
+   FROM surveys_created 
+   WHERE survey_ID = sID;
 END$$
 
 DELIMITER ;
@@ -280,9 +305,10 @@ DROP PROCEDURE IF EXISTS `AddSurvey`;
 
 DELIMITER $$
 USE `BSA_Database`$$
-CREATE PROCEDURE `AddSurvey` (IN cID INT, IN sName VARCHAR(100) )
+CREATE PROCEDURE `AddSurvey` (IN cID INT, IN sName VARCHAR(100), IN qd  VARCHAR(100))
 BEGIN
-   INSERT INTO surveys_created (customer_ID, survey_name) VALUES (cID, sName);
+   INSERT INTO surveys_created (customer_ID, survey_name, quick_description) VALUES (cID, sName, qd);
+   
 END$$
 
 DELIMITER ;
@@ -294,11 +320,12 @@ DROP PROCEDURE IF EXISTS `GetSurveyQuestion`;
 
 DELIMITER $$
 USE `BSA_Database`$$
-CREATE PROCEDURE `GetSurveyQuestions` (IN qID INT)
+CREATE PROCEDURE `GetSurveyQuestions` (IN sID INT)
 BEGIN
    SELECT question_string
    FROM questions 
-   WHERE questions.question_ID = qID;
+   WHERE survey_ID = sID;
+   
 END$$
 
 DELIMITER ;
@@ -324,7 +351,9 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetQuestionNumber` (IN qID INT)
 BEGIN
-   SELECT question_order FROM questions WHERE question_ID = qID; 
+   SELECT question_order 
+   FROM questions 
+   WHERE question_ID = qID; 
  
 END$$
 
@@ -352,7 +381,9 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetAnswersByQuestionID` (IN qID INT)
 BEGIN
-   SELECT * FROM answers WHERE question_ID = qID; 
+   SELECT * 
+   FROM answers 
+   WHERE question_ID = qID; 
  
 END$$
 
@@ -365,7 +396,9 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetAnswerStringByID` (IN aID INT)
 BEGIN
-   SELECT answer_string FROM answers WHERE answer_ID = aID; 
+   SELECT answer_string 
+   FROM answers 
+   WHERE answer_ID = aID; 
  
 END$$
 
@@ -393,7 +426,9 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetResultsFromTaker` (IN tID INT)
 BEGIN
-   SELECT * FROM survey_results WHERE taker_ID = tID; 
+   SELECT * 
+   FROM survey_results 
+   WHERE taker_ID = tID; 
  
 END$$
 
@@ -561,7 +596,7 @@ BEGIN
       DECLARE total DOUBLE DEFAULT -1;
       DECLARE d DOUBLE DEFAULT TakenSurvey (sID);
       
-   
+
             SELECT COUNT(taker_ID) INTO total
             FROM  `survey_results`
             WHERE answer_ID = aID;
