@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`customers` (
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`surveys_created`(
     `survey_ID` INT NOT NULL AUTO_INCREMENT, 
     `quick_description` VARCHAR(100), 
+    `total_questions` INT NOT NULL,
     `customer_ID` INT NOT NULL, 
     `survey_name` VARCHAR(30) NOT NULL, 
     `date_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
@@ -90,17 +91,17 @@ INSERT  INTO `customers`(`email`,`thePassword`,`company_name`, `first_name`, `la
 -- Creating Default temporay Data for Surveys Created Table
 -------------------------------------------------------------------------------*/
 
-INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`) VALUES
-(1,  'Home Depot Performance Survey', 'Get some feedback about our Performance'),
-(1,  'Home Depot Employee Survey','Get some feedback from our Employees'),
-(2,  'Microsoft Vista Survey','Get some feedback about our product'),
-(3,  'BACONATOR Review', 'Check out what people think about the Baconator'),
-(4,  'Customer Survey', 'Get some feedback from our customers'),
-(5,  'How manly is your order?', 'To gauge the toxic masculinity levels'),
-(6,  'Did you flip your Blizzard?', 'To see if people are really this annoying'),
-(7,  'Rate X-AE-12\'s performance', 'Get some on our child'),
-(8,  'Spotify Survey', 'Trying to get feedback on the bangers and sadboi tunes'),
-(9,  'Overlord Bezos Survey', 'Get some feedback about our product');
+INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `total_questions`) VALUES
+(1,  'Home Depot Performance Survey',   'Get some feedback about our Performance',                  2),
+(1,  'Home Depot Employee Survey',      'Get some feedback from our Employees',                     1),
+(2,  'Microsoft Vista Survey',          'Get some feedback about our product',                      1),
+(3,  'BACONATOR Review',                'Check out what people think about the Baconator',          3),
+(4,  'Customer Survey',                 'Get some feedback from our customers',                     0),
+(5,  'How manly is your order?',        'To gauge the toxic masculinity levels',                    0),
+(6,  'Did you flip your Blizzard?',     'To see if people are really this annoying',                0),
+(7,  'Rate X-AE-12\'s performance',     'Get some on our child',                                    0),
+(8,  'Spotify Survey',                  'Trying to get feedback on the bangers and sadboi tunes',   0),
+(9,  'Overlord Bezos Survey',           'Get some feedback about our product',                      0);
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Questions Table
@@ -299,15 +300,30 @@ BEGIN
 END$$
 
 DELIMITER ;
+/*-----------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetTotalQuestions`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetTotalQuestions` (IN sID INT)
+BEGIN
+   SELECT total_questions 
+   FROM surveys_created 
+   WHERE survey_ID = sID;
+END$$
+
+DELIMITER ;
+
 
 /*-----------------------------------------------------------------------------*/
 DROP PROCEDURE IF EXISTS `AddSurvey`;
 
 DELIMITER $$
 USE `BSA_Database`$$
-CREATE PROCEDURE `AddSurvey` (IN cID INT, IN sName VARCHAR(100), IN qd  VARCHAR(100))
+CREATE PROCEDURE `AddSurvey` (IN cID INT, IN sName VARCHAR(100), IN qd  VARCHAR(100), IN total INT)
 BEGIN
-   INSERT INTO surveys_created (customer_ID, survey_name, quick_description) VALUES (cID, sName, qd);
+
+   INSERT INTO surveys_created (customer_ID, survey_name, quick_description, total_questions) VALUES (cID, sName, qd , total);
    
 END$$
 
@@ -502,24 +518,26 @@ END $$
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
-DROP FUNCTION IF EXISTS `TotalQuestions`;
+-- Temporarly not used
 
-DELIMITER $$
-CREATE FUNCTION `TotalQuestions` (sID INT) RETURNS INT DETERMINISTIC
-BEGIN
-      # variables 
-      DECLARE total INT DEFAULT -1;
-      
-	  # match answer_ID to corresponding question
-            SELECT COUNT(survey_ID) INTO total
-            FROM  `questions`
-            WHERE survey_ID = sID;
-            
-	  # total num of questions in a survey
-      RETURN total;
-END $$
+-- DROP FUNCTION IF EXISTS `TotalQuestions`;
 
-DELIMITER ;
+-- DELIMITER $$
+-- CREATE FUNCTION `TotalQuestions` (sID INT) RETURNS INT DETERMINISTIC
+-- BEGIN
+--       # variables 
+--       DECLARE total INT DEFAULT -1;
+--       
+-- 	  # match answer_ID to corresponding question
+--             SELECT COUNT(survey_ID) INTO total
+--             FROM  `questions`
+--             WHERE survey_ID = sID;
+-- 		
+-- 	  # total num of questions in a survey
+--       RETURN total;
+-- END $$
+
+-- DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
 DROP FUNCTION IF EXISTS `IsSurveyFinished`;
