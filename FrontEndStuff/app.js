@@ -8,6 +8,7 @@ const loginRoutes = require('./routes/loginRoutes');
 const busRoutes = require('./routes/busRoutes');
 const createSurveyRoutes = require('./routes/createSurveyRoutes');
 const takeSurveyRoutes = require('./routes/takeSurveyRoutes');
+const addQuestionsRoutes = require('./routes/addQuestionsRoutes');
 
 //express app
 const app = express();
@@ -18,7 +19,11 @@ var obj = {};
 var companyName;
 var fullName;
 var customerID;
+var surveyDescriptions;
 var surveyNames; //array with all of account survey titles
+//creating variables for createSurvey ejs files
+var newSurveyTitle;
+var newSurveyDescription;
 
 //register view engine
 app.set('view engine', 'ejs');
@@ -64,6 +69,9 @@ app.use('/busOwn', busRoutes);
 
 //create survey routes
 app.use('/createSurvey', createSurveyRoutes);
+
+//add questions routes
+app.use('/addQuestions', addQuestionsRoutes);
 
 //take survey routes
 app.use('/TakeSurvey', takeSurveyRoutes);

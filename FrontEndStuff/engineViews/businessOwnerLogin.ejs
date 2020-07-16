@@ -51,10 +51,10 @@
     <p class="surveyIntro" ><%= fullName %>,</p>
     <p class="surveyIntro">Here are your current surveys:</p>
 
-<%  surveyNames.forEach(function(survey) { %>
+<%  surveyNames.forEach(function(survey, index) { %>
     <div class = "currentSurvey">
         <p> <strong> <%= survey %> </strong> </p>
-        <p> Quick description of survey </p>
+        <p> <%= surveyDescriptions[index]%> </p>
     </div>
 <%  }); %>
 

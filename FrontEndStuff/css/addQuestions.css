@@ -55,21 +55,6 @@ div{
     margin-top: 2%;
 }
 
-/* #description {
-    margin-bottom: 0;
-} */
-
-#surveyTitle {
-    width: 20%;
-}
-
-textarea {
-    width: 43%;
-    height: 33px;
-    resize: none;
-    font: 400 13.3333px Arial;
-}
-
 p{
     padding: 10px;
 }
@@ -81,15 +66,6 @@ hr {
     background-image: linear-gradient(to right, #ccc, #333, #ccc);
 }
 
-/* form {
-    max-width: 500px;
-    width: 80%;
-    height: 150px;
-    padding: 10px;
-    background: #7892c2;
-    border: 3px ridge #31d2de;
-    margin: 0 auto;
-} */
 
 .submitButton {
 	box-shadow:inset 0px -1px 3px 0px #91b8b3;
@@ -114,11 +90,4 @@ hr {
 .submitButton:active {
 	position:relative;
 	top:1px;
-}
-
-div {
-    border: ridge 4px #31d2de;
-	background: #7892c2;
-	/* margin-bottom: 1.5%;
-	margin-top: 1.5%; */
 }

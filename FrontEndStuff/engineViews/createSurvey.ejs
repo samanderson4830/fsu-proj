@@ -28,16 +28,23 @@
 
 <body>
     <h2>New Survey</h2>
-    <div>
-        <label for="surveyTitle">
-            Survey Title:
-        </label>
-        <p><input type="text" id="surveyTitle" name="surveyTitle" placeholder="Survey Title"></p>
-        <label for="surveyDescription">
-            Survey Description:
-        </label>
-        <p><input type="text" id="surveyDescription" name="surveyDescription" placeholder="Survey Description"></p>
-    </div>
+    <form action="createSurvey/addSurvey" method="POST">
+        <div>
+            <label for="surveyTitle">
+                Survey Title:
+            </label>
+            <p><input type="text" id="surveyTitle" name="surveyTitle" placeholder="Title" maxlength="29" required></p>
+            <label for="surveyDescription">
+                Survey Description:
+            </label>
+            <p id = "description"> <textarea id="surveyDescription" name="surveyDescription" placeholder="Description" maxlength="99" required></textarea> </p>
+            <input type="submit" class = "submitButton" value="Next">
+        </div>
+
+    </form>
+
+    <!--Copyright footer-->
+    <%-include ('./footer')  %>
 
 </body>
 

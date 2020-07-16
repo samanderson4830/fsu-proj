@@ -90,17 +90,17 @@ INSERT  INTO `customers`(`email`,`thePassword`,`company_name`, `first_name`, `la
 -- Creating Default temporay Data for Surveys Created Table
 -------------------------------------------------------------------------------*/
 
-INSERT INTO `surveys_created`(`customer_ID`,`survey_name`) VALUES
-(1,  'Home Depot Performance Survey'),
-(1,  'Home Depot Employee Survey'),
-(2,  'Microsoft Vista Survey'),
-(3,  'BACONATOR Review'),
-(4,  'Customer Survey'),
-(5,  'How manly is your order?'),
-(6,  'Did you flip your Blizzard?'),
-(7,  'Rate X-AE-12\'s performance'),
-(8,  'Spotify Survey'),
-(9,  'Overlord Bezos Survey');
+INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`) VALUES
+(1,  'Home Depot Performance Survey', 'Get some feedback about our Performance'),
+(1,  'Home Depot Employee Survey','Get some feedback from our Employees'),
+(2,  'Microsoft Vista Survey','Get some feedback about our product'),
+(3,  'BACONATOR Review', 'Check out what people think about the Baconator'),
+(4,  'Customer Survey', 'Get some feedback from our customers'),
+(5,  'How manly is your order?', 'To gauge the toxic masculinity levels'),
+(6,  'Did you flip your Blizzard?', 'To see if people are really this annoying'),
+(7,  'Rate X-AE-12\'s performance', 'Get some on our child'),
+(8,  'Spotify Survey', 'Trying to get feedback on the bangers and sadboi tunes'),
+(9,  'Overlord Bezos Survey', 'Get some feedback about our product');
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Questions Table
