@@ -24,6 +24,9 @@ var surveyNames; //array with all of account survey titles
 //creating variables for createSurvey ejs files
 var newSurveyTitle;
 var newSurveyDescription;
+//creating variable for add Questions ejs file
+var addingToSurvey;
+var format;
 
 //register view engine
 app.set('view engine', 'ejs');

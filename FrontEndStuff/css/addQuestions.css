@@ -10,8 +10,19 @@ h1{
     color: white; text-decoration: none;
 }
 h2{
+    margin: 0.5%;
 	font-size: 1.8em;
 }
+
+.titleForPage {
+    margin: 0;
+    padding: 1px;
+}
+
+.tab {
+    padding-right: 65px;
+}
+
 a:link{
     text-decoration: none;
 }
@@ -53,10 +64,21 @@ div{
     padding: 22px;
     margin: 17%;
     margin-top: 2%;
+    border: ridge 4px #31d2de;
+	background: #7892c2;
 }
 
-p{
+p {
     padding: 10px;
+}
+
+.promptUser {
+    text-align: left;
+}
+
+strong {
+    text-decoration: underline;
+    padding-right: 65px;
 }
 
 hr {
@@ -64,6 +86,17 @@ hr {
     height: 1px;
     background: #333;
     background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+#question {
+    width: 55%;
+    font: 400 13.3333px Arial;
+    resize: none;
+    vertical-align: bottom;
+}
+
+#promptQuestion {
+
 }
 
 

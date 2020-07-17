@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="author" content="FrontEnd-BSA">
     <title>BSA | Add Some Questions</title>
+    <!-- Including a hosted copy of jQuery library for use in CSS and Javascript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <!--Links the css style sheet-->
     <link rel="stylesheet" type="text/css" href="addQuestions.css">
     <!-- Links font grabbed from google -->
@@ -22,9 +24,35 @@
          </button>
          <hr>
     </header>
- <h2>Add Questions</h2>
+    <h2> 
+        <p class="titleForPage">Add Questions</p> 
+        <p class="titleForPage">to</p> 
+        <p class="titleForPage"><%= addingToSurvey = "Home Depot Hydro Plung Rev" %></p> 
+    </h2>
+    <div>
+        <form action="/addQuestions/addQuestion" method="POST">
+            <p class="promptUser"> 
+                <strong>What type of question:</strong> 
+                <span class="tab"> <label for="multipleChoice">Multiple Choice</label>
+                <input name="questionFormat" id="multipleChoice"type="radio" value="MC" required> </span>
+                <span class="tab"> <label for ="trueFalse">True or False</label>
+                <input name="questionFormat" id="trueFalse"type="radio" value="TF"> </span>
+                <span class="tab"> <label for="yesNo">Yes or No</label>
+                <input name="questionFormat" id="yesNo"type="radio" value="YN"></span>
+            </p>
+
+            <p class="promptUser">
+                <label for="question"><strong>What's your question:</strong></label>
+                <span class="tab"> <textarea id="question" name="question" placeholder="Question" maxlength="249" rows="2" required></textarea> </span>
+                <input type="submit" class="submitButton" id = "addQuestion" value="Next">
+            </p>
+        </form>
+
+    </div>
 
 
+
+<script></script>
 
 <!--Copyright footer-->
     <%-include ('./footer')  %>

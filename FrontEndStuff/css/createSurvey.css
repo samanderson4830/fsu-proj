@@ -53,6 +53,8 @@ div{
     padding: 22px;
     margin: 17%;
     margin-top: 2%;
+    border: ridge 4px #31d2de;
+	background: #7892c2;
 }
 
 /* #description {
@@ -114,11 +116,4 @@ hr {
 .submitButton:active {
 	position:relative;
 	top:1px;
-}
-
-div {
-    border: ridge 4px #31d2de;
-	background: #7892c2;
-	/* margin-bottom: 1.5%;
-	margin-top: 1.5%; */
 }

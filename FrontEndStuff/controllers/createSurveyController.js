@@ -15,6 +15,7 @@ const create_new = function (req, res) {
         else {
             surveyNames.push(newSurveyTitle);
             surveyDescriptions.push(newSurveyDescription);
+            addingToSurvey = newSurveyTitle;
             res.redirect("/addQuestions");
         }
     });
