@@ -4,8 +4,52 @@ const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
 const nextButton = document.getElementById('next-btn')
 const thankButton = document.getElementById('thank-btn');
+var totalQuestions
+let currentQuestionIndex, questionArray, currentAnswerArray
 
-let currentQuestionIndex
+//*********************************************************************************** */
+const db_totalQuestions = new XMLHttpRequest();
+db_totalQuestions.open('GET', 'http://localhost:3000/TakeSurvey/offset');
+
+db_totalQuestions.onload = function(){
+    console.log('GetRequestTest');
+    console.log(db_totalQuestions.responseText);
+    totalQuestions = parseInt(db_totalQuestions.responseText);
+    console.log("Worked....");
+};
+db_totalQuestions.send();
+
+//*********************************************************************************** */
+
+//*********************************************************************************** */
+const dbRequest = new XMLHttpRequest();
+dbRequest.open('GET', 'http://localhost:3000/TakeSurvey/questions');
+
+dbRequest.onload = function(){
+    console.log('GetRequestTest');
+    console.log(dbRequest.responseText);
+    questionArray = JSON.parse(dbRequest.responseText);
+    console.log(questionArray[0].question_string);
+};
+dbRequest.send();
+
+//*********************************************************************************** */
+
+//*********************************************************************************** */
+const dbAnswer = new XMLHttpRequest();
+dbAnswer.open('GET', 'http://localhost:3000/TakeSurvey/answers');
+
+dbAnswer.onload = function(){
+    console.log('GetRequestTest');
+    console.log(dbAnswer.responseText);
+    currentAnswerArray = JSON.parse(dbAnswer.responseText);
+    console.log(currentAnswerArray[0].answer_string);
+};
+dbAnswer.send();
+
+//*********************************************************************************** */
+
+
 
 startButton.addEventListener('click',startSurvey)
 nextButton.addEventListener('click', () => {
@@ -15,6 +59,9 @@ nextButton.addEventListener('click', () => {
 
 function startSurvey() {
     console.log('Started')
+    //
+    //Put database request here
+    //
     startButton.classList.add('hide')
     currentQuestionIndex = 0
     questionContainerElement.classList.remove('hide')
@@ -24,19 +71,34 @@ function startSurvey() {
 
 function setNextQuestion(){
     resetState()
-    showQuestion(questions[currentQuestionIndex])
+    showQuestion(questionArray[currentQuestionIndex])
+    //*********************************************************************************** */
+    const dbAnswer = new XMLHttpRequest();
+    dbAnswer.open('GET', 'http://localhost:3000/TakeSurvey/answers');
+
+    dbAnswer.onload = function(){
+        console.log('GetRequestTest');
+        console.log(dbAnswer.responseText);
+        currentAnswerArray = JSON.parse(dbAnswer.responseText);
+        console.log(currentAnswerArray[0].answer_string);
+    };
+    dbAnswer.send();
+
+    //*********************************************************************************** */
     
 }
 
 function showQuestion(question){
-    questionElement.innerText = question.question
-    question.answers.forEach(answer => {
+    questionElement.innerText = question.question_string
+    var i = 0;
+    currentAnswerArray.forEach(answer_string => { //change "answers" to whatever the json string as... could be "answer_string"
         const button = document.createElement('button')
-        button.innerText = answer.text
+        button.innerText = currentAnswerArray[i].answer_string
         button.classList.add('btn')
         //button.dataset = answer
         button.addEventListener('click',selectAnswer)
         answerButtonsElement.appendChild(button)
+        i++;
     });
 }
 
@@ -54,7 +116,7 @@ function selectAnswer(e){
     // Array.from(answerButtonsElement.children).forEach(button=>{
         
     // })
-    if(questions.length > currentQuestionIndex+1){
+    if(questionArray.length > currentQuestionIndex+1){
     nextButton.classList.remove('hide')
     }
     else{
@@ -63,22 +125,3 @@ function selectAnswer(e){
         
     }
 }
-
-const questions = [
-    {
-        question: 'Is this cool?',
-        answers: [
-            {text: 'Yes'},
-            {text: 'No'}
-        ]
-    },
-    {
-        question: 'Would you tell your friends this is cool?',
-        answers: [
-            {text: 'No'},
-            {text: 'Nope'},
-            {text: 'Ok, kinda'},
-            {text: 'Duh, yes'}
-        ]
-    }
-]
