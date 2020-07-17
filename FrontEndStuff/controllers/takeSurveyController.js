@@ -1,61 +1,108 @@
 const mysql = require('mysql');
 const db = require('../models/db_connection');
-const { render } = require('ejs');
 
+var code = 0;
+let questionArray, answerArray, ansTrack;
 
 const takeSurvey_page = (req,res) => {
     res.render('TakeSurvey');
 }
 
 const takeSurvey_code = (req,res) => {
-    const code = req.query.code;
-    db.query('SELECT survey_name FROM surveys_created WHERE survey_Id = ?', code, (err,result) => {
-        if(err)
-        throw err;
-        else{
-            //res.send(result);
-            //var test1 = JSON.parse(result);
-
-            obj = result[0].survey_name;
-            console.log(obj);
-            db.query('SELECT survey_ID FROM surveys_created WHERE survey_name = ?', obj, (err,thisResult) => {
-                if(err)
-                throw err;
-                else{
-                    //res.send(result);
-                    
-                    var test1 = {};
-                    test1 = thisResult[0].survey_ID;
-                    console.log(test1);
-                    res.redirect('../survey');
-                }
-            })
+     code = req.query.code;
+     ansTrack = 0; //tracks the current question number
+    let sql1 = "call BSA_Database.GetSurveyByID(?)";
+    db.query(sql1, [code], (err, results) => {
+        if (err) throw err;
+        else {
+            console.log('Data found');
+            obj = results[0][0].survey_name;
             //res.redirect('../survey');
-            //**** Now need to send this survey name to the survey page and make it generic. */
-            // res.render('surveyPage', {
-            //     _name : result[0].survey_name
-            // });
         }
-    })
+    });
+
+    let sql = "call BSA_Database.GetSurveyQuestions(?)";
+
+    db.query (sql,[code], (err, result) => {
+        if (err)
+        {
+            throw err;
+        } else
+        {
+            console.log("Data found .....");
+            test2 = result[0];
+            res.redirect(303,'../survey');
+            //res.send(result[0]);
+        }
+    });
+}
+
+const get_questions = (req,res) => {
+    let sql_question = "call BSA_Database.GetSurveyQuestions(?)";
+
+    db.query (sql_question,[code], (err, result) => {
+        if (err)
+        {
+            throw err;
+        } else
+        {
+            console.log("Data found .....");
+            
+            questionArray = result[0];
+            res.send(questionArray);
+        }
+    });
 
     
-
-
-    // let sql = "call BSA_Database.GetSurveyQuestions('?')", code;
-
-    // db.query (sql, (err, result) => {
-    //     if (err)
-    //     {
-    //         throw err;
-    //     } else
-    //     {
-    //         console.log("Data found .....");
-    //         res.send(result);
-    //     }
-    // });
+       
 }
+
+const get_offset = (req,res) => {
+    let totalQuestion = "call BSA_Database.GetOffset(?)";
+
+    db.query (totalQuestion,[code], (err, results) => {
+        if (err)
+        {
+            throw err;
+        } else
+        {
+            var totalQ = results;
+            var sum = 0,i;
+            for(i = 0; i < totalQ[0].length; i++)
+            {
+                sum += totalQ[0][i].total_questions
+            }
+            //console.log(totalQ[0][1].total_questions); //[0][0].total_questions
+            console.log(sum);
+            ansTrack = sum +1;
+            
+        }
+    });
+}
+
+const get_answers = (req,res) => {
+    let sql_answer = "call BSA_Database.GetSurveyAnswers(?)";
+
+    db.query (sql_answer,[ansTrack], (err, result) => {
+        if (err)
+        {
+            throw err;
+        } else
+        {
+            console.log("Data found .....");
+            
+            answerArray = result[0];
+            res.send(answerArray);
+        }
+    });
+    ansTrack++;
+}
+
 
 module.exports = {
     takeSurvey_page,
-    takeSurvey_code
+    takeSurvey_code,
+    get_answers,
+    get_offset,
+    get_questions
 }
