@@ -310,6 +310,23 @@ BEGIN
    SELECT total_questions 
    FROM surveys_created 
    WHERE survey_ID = sID;
+   
+END$$
+
+DELIMITER ;
+
+
+/*-----------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetOffset`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetOffset` (IN sID INT)
+BEGIN
+   SELECT total_questions 
+   FROM surveys_created 
+   WHERE survey_ID < sID;
+   
 END$$
 
 DELIMITER ;
