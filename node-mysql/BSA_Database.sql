@@ -9,36 +9,36 @@ DROP TABLE IF EXISTS `survey_results`;
 DROP TABLE IF EXISTS `surveys_created`;
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`customers` (
-  `customer_ID` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(100) NOT NULL,
-  `first_name` VARCHAR(50),
-  `last_name` VARCHAR(50) ,
-  `thePassword` VARCHAR(45) NOT NULL,
+  `customer_ID`  INT NOT NULL AUTO_INCREMENT,
+  `email`        VARCHAR(100) NOT NULL,
+  `first_name`   VARCHAR(50),
+  `last_name`    VARCHAR(50),
+  `thePassword`  VARCHAR(45)  NOT NULL,
   `company_name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`customer_ID`),
   UNIQUE INDEX `customer_ID_UNIQUE` (`customer_ID` ASC)
 )ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`surveys_created`(
-    `survey_ID` INT NOT NULL AUTO_INCREMENT, 
+    `survey_ID`         INT NOT NULL AUTO_INCREMENT, 
     `quick_description` VARCHAR(100), 
-    `total_questions` INT NOT NULL,
-    `customer_ID` INT NOT NULL, 
-    `survey_name` VARCHAR(30) NOT NULL, 
-    `date_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY(`survey_ID`), 
-    INDEX `idx.customer` (customer_ID),
-    CONSTRAINT `fk_customer_ID` 
-    FOREIGN KEY(`customer_ID`)
+    `total_questions`   INT NOT NULL,
+    `customer_ID`       INT NOT NULL, 
+    `survey_name`       VARCHAR(30) NOT NULL, 
+    `date_time`         TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
+    PRIMARY KEY (`survey_ID`), 
+    INDEX        `idx.customer` (customer_ID),
+    CONSTRAINT   `fk_customer_ID` 
+    FOREIGN KEY (`customer_ID`)
     REFERENCES customers(`customer_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
 )ENGINE = InnoDB ;
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`questions`(
-    `question_ID` INT NOT NULL AUTO_INCREMENT, 
-    `survey_ID` INT NOT NULL, 
-    `question_order` INT NOT NULL, 
+    `question_ID`     INT NOT NULL AUTO_INCREMENT, 
+    `survey_ID`       INT NOT NULL, 
+    `question_order`  INT NOT NULL, 
     `question_string` VARCHAR(250) NOT NULL, 
-    `date_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,  
+    `date_time`       TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,  
     PRIMARY KEY(`question_ID`), 
     INDEX `idx.survey_ID` (survey_ID),
     CONSTRAINT `fk_survey_ID` 
@@ -47,11 +47,11 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`questions`(
 )ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `BSA_Database`.`answers`(
-    `answer_ID` INT NOT NULL AUTO_INCREMENT, 
-    `question_ID` INT NOT NULL, 
+    `answer_ID`     INT NOT NULL AUTO_INCREMENT, 
+    `question_ID`   INT NOT NULL, 
     `answer_string` VARCHAR(100) NOT NULL, 
-    `answer_order` INT NOT NULL, 
-    `date_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
+    `answer_order`  INT NOT NULL, 
+    `date_time`     TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
     PRIMARY KEY(`answer_ID`,`question_ID`),
     FOREIGN KEY(`question_ID`)
     REFERENCES questions(`question_ID`) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -60,11 +60,11 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`answers`(
 
 
 CREATE TABLE `BSA_Database`.`survey_results`(
-    `taker_ID` INT NOT NULL, 
+    `taker_ID`  INT NOT NULL, 
     `survey_ID` INT NOT NULL,
     `answer_ID` INT NOT NULL,  
-    `is_done` BOOLEAN, 
-    `date_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
+    `is_done`   BOOLEAN, 
+    `date_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
 	KEY (`taker_ID`, survey_ID),
     INDEX `idx.answer_ID` (answer_ID),
     CONSTRAINT `fk_answer_ID` 
@@ -121,23 +121,24 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
  INSERT INTO `answers`(`question_ID`,`answer_string`, `answer_order`) VALUES
 -- Home Depot Performance Survey
 # Ans for Q1
-(1,    'Great', 1),
-(1,    'Good',  2),
-(1,    'ok',    3),
-(1,    'poor',  4),
+(1,    'Strongly Agree', 1),
+(1,    'Agree',          2),
+(1,    'Maybe',          3),
+(1,    'Disagree',       4),
+
 # Ans for Q2
-(2,    'YES ', 1),
-(2,    'NO',   2),
+(2,    'Yes',  1),
+(2,    'No',   2),
 
 -- Home Depot Employee Survey
 # Ans for Q1
-(3,    'Yes, home depot is great', 1),
-(3,    'No, I want a new job',     2),
+(3,    'Yes',    1),
+(3,    'No',     2),
 
 -- Windows Vista Survey
 # Ans for Q1
-(4,    'Yes, its great', 1),
-(4,    'No!',            2),
+(4,    'Yes',           1),
+(4,    'No',            2),
 
 -- BACONATOR Review
 # Ans for Q1
@@ -146,8 +147,8 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
 (5,    'more than 3lb', 3),
 
 # Ans for Q2
-(6,    'Yes!',          1),
-(6,    'No!',           2),
+(6,    'Yes',          1),
+(6,    'No',           2),
 
 # Ans for Q3
 (7,    'More Bacon!',          1),
@@ -159,10 +160,10 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
  INSERT INTO `survey_results`(`taker_ID`,`survey_ID`,`answer_ID`, `is_done`) VALUES
 -- Home Depot Performance Survey Answers / Has (2) questions
 (1,      1,     2,     NULL),  # new taker 1
-(1,      1,     3,     true),
+(1,      1,     6,     true),
 
 (2,      1,     1,     NULL),  # new taker 2
-(2,      1,     4,     true),
+(2,      1,     5,     true),
 
 -- Home Depot Employee Survey Answers / Has (1) question
 (3,      2,    7,     true),   # new taker 3
@@ -181,7 +182,7 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
 
 (10,     4,    12,    NULL),   # new taker 10
 (10,     4,    14,    NULL),   
-(10,     4,    16,    true); 
+(10,     4,    16,    true);
 
 /*-----------------------------------------------------------------------------
 -- Creating all PROCEDURE
@@ -340,7 +341,8 @@ USE `BSA_Database`$$
 CREATE PROCEDURE `AddSurvey` (IN cID INT, IN sName VARCHAR(100), IN qd  VARCHAR(100), IN total INT)
 BEGIN
 
-   INSERT INTO surveys_created (customer_ID, survey_name, quick_description, total_questions) VALUES (cID, sName, qd , total);
+   INSERT INTO surveys_created (customer_ID, survey_name, quick_description, total_questions) 
+   VALUES (cID, sName, qd , total);
    
 END$$
 
@@ -399,7 +401,8 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `AddQuestions` (IN sID INT, IN qOrder INT, IN qString VARCHAR(250) )
 BEGIN
-    INSERT INTO questions (survey_ID, question_order, question_string) VALUES (sID, qOrder, qString);
+    INSERT INTO questions (survey_ID, question_order, question_string) 
+    VALUES (sID, qOrder, qString);
     
 END$$
 
@@ -444,7 +447,8 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `AddAnswer` (IN qID INT, IN aOrder INT, IN aString VARCHAR(100) )
 BEGIN
-   INSERT INTO answers (question_ID, answer_order, answer_string) VALUES (qID, aOrder, aString);
+   INSERT INTO answers (question_ID, answer_order, answer_string) 
+   VALUES (qID, aOrder, aString);
  
 END$$
 
@@ -472,16 +476,26 @@ DROP PROCEDURE IF EXISTS `AddResult`;
 
 DELIMITER $$
 USE `BSA_Database`$$
-CREATE PROCEDURE `AddResult` (IN aID INT, IN sID INT, IN qID INT)
-BEGIN
-   DECLARE done BOOLEAN DEFAULT NULL;
+CREATE PROCEDURE `AddResult` (IN ans_string VARCHAR(100), IN sID INT, IN qID INT) 
 
+BEGIN
+	
+   DECLARE done BOOLEAN DEFAULT NULL;
+   DECLARE tID INT DEFAULT SetTakerID ();
+   DECLARE aID INT DEFAULT FindAnswerID(ans_string, qID);
+   
    # check if survey is done 
 		IF IsSurveyFinished (qID, aID) = TRUE THEN
 			SET done = TRUE; 
 		END IF;
+        
    # if false done will remain null
-   INSERT INTO survey_results (answer_ID, survey_ID, is_done) VALUES (aID, sID, done);
+   SET FOREIGN_KEY_CHECKS=0;
+   
+   INSERT INTO survey_results (taker_ID, answer_ID, survey_ID, is_done) 
+   VALUES (tID ,aID, sID, done);
+   
+   SET FOREIGN_KEY_CHECKS=1;
  
 END$$
 
@@ -537,24 +551,24 @@ DELIMITER ;
 /*-----------------------------------------------------------------------------*/
 -- Temporarly not used
 
--- DROP FUNCTION IF EXISTS `TotalQuestions`;
+DROP FUNCTION IF EXISTS `TotalQuestions`;
 
--- DELIMITER $$
--- CREATE FUNCTION `TotalQuestions` (sID INT) RETURNS INT DETERMINISTIC
--- BEGIN
---       # variables 
---       DECLARE total INT DEFAULT -1;
---       
--- 	  # match answer_ID to corresponding question
---             SELECT COUNT(survey_ID) INTO total
---             FROM  `questions`
---             WHERE survey_ID = sID;
--- 		
--- 	  # total num of questions in a survey
---       RETURN total;
--- END $$
+DELIMITER $$
+CREATE FUNCTION `TotalQuestions` (sID INT) RETURNS INT DETERMINISTIC
+BEGIN
+      # variables 
+      DECLARE total INT DEFAULT -1;
+      
+	  # match answer_ID to corresponding question
+            SELECT COUNT(survey_ID) INTO total
+            FROM  `questions`
+            WHERE survey_ID = sID;
+		
+	  # total num of questions in a survey
+      RETURN total;
+END $$
 
--- DELIMITER ;
+DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
 DROP FUNCTION IF EXISTS `IsSurveyFinished`;
@@ -604,6 +618,10 @@ DELIMITER ;
 /*-----------------------------------------------------------------------------*/
 DROP FUNCTION IF EXISTS `TakenSurvey`;
 
+#**************************************
+# Helper function for PickedChoice.   *
+#**************************************
+
 DELIMITER $$
 CREATE FUNCTION `TakenSurvey` (sID INT) RETURNS INT DETERMINISTIC
 BEGIN
@@ -639,6 +657,86 @@ BEGIN
       SET total =  total / d;     
 	  # precent of survey takers that selected an answer
       RETURN total;
+END $$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+DROP FUNCTION IF EXISTS `SetTakerID`;
+
+#**************************************
+# Helper function for AddResult       *
+#**************************************
+
+DELIMITER $$
+CREATE FUNCTION `SetTakerID` () RETURNS INT DETERMINISTIC
+BEGIN
+      # variable must be a double
+      DECLARE tID INT DEFAULT -1;
+      DECLARE done BOOL DEFAULT NULL;
+      
+	  SELECT MAX(taker_ID) INTO tID FROM survey_results LIMIT 1 ;
+      SELECT MAX(is_done) INTO done FROM survey_results WHERE tID;
+      
+      IF done = 1 THEN
+			SET tID = tID + 1;
+      END IF;
+
+      RETURN tID;
+END $$
+
+DELIMITER ;
+/*-----------------------------------------------------------------------------*/
+
+#**************************************
+# Helper function for FindAnswerID.   *
+#**************************************
+
+DROP FUNCTION IF EXISTS `NumberOfAnswers`;
+
+DELIMITER $$
+CREATE FUNCTION `NumberOfAnswers` (qID INT) RETURNS INT DETERMINISTIC
+BEGIN
+	  DECLARE tID INT DEFAULT -1; 
+
+   
+      RETURN num;
+END $$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+DROP FUNCTION IF EXISTS `FindAnswerID`;
+
+DELIMITER $$
+CREATE FUNCTION `FindAnswerID` (ans_string VARCHAR (30), qID INT) RETURNS INT DETERMINISTIC
+BEGIN
+   # a question_ID will a have a set of associated answer_strings where it can
+   # be reasonably assumed that all answer_strings would be unique
+   
+   DECLARE a VARCHAR (30) DEFAULT ans_string; 
+   DECLARE aID INT  DEFAULT 0; 
+	
+   SELECT answer_ID INTO aID 
+   FROM  answers 
+   WHERE question_ID = qID
+   LIMIT 1;
+   
+   L1: LOOP
+   
+		SELECT answer_string INTO ans_string 
+		FROM answers 
+		WHERE answer_ID = aID;
+    
+		IF ans_string = a || aID < 0  THEN
+			LEAVE L1;
+		ELSE 
+			SET aID = aID - 1;
+		END IF;
+        
+	END LOOP;
+   
+      RETURN aID;
 END $$
 
 DELIMITER ;
