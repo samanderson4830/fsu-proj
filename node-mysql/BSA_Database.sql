@@ -686,24 +686,6 @@ BEGIN
 END $$
 
 DELIMITER ;
-/*-----------------------------------------------------------------------------*/
-
-#**************************************
-# Helper function for FindAnswerID.   *
-#**************************************
-
-DROP FUNCTION IF EXISTS `NumberOfAnswers`;
-
-DELIMITER $$
-CREATE FUNCTION `NumberOfAnswers` (qID INT) RETURNS INT DETERMINISTIC
-BEGIN
-	  DECLARE tID INT DEFAULT -1; 
-
-   
-      RETURN num;
-END $$
-
-DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
 DROP FUNCTION IF EXISTS `FindAnswerID`;
