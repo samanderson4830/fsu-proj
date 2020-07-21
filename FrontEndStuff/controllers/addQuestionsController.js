@@ -9,6 +9,7 @@ const add_page = function (req, res) {
 
 const add_question = function (req, res) {
     format = req.body.questionFormat;
+    
     res.redirect('/addQuestions');
 }
 

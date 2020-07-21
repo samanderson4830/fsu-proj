@@ -10,7 +10,7 @@ h1{
     color: white; text-decoration: none;
 }
 h2{
-    margin: 0.5%;
+    margin-top: 1%;
 	font-size: 1.8em;
 }
 
@@ -20,7 +20,19 @@ h2{
 }
 
 .tab {
-    padding-right: 65px;
+    padding-right: 13px;
+    padding-left: 12px;
+    border-right: 2px #31d2de solid;
+}
+
+#lastTab {
+    padding-right: 13px;
+    padding-left: 12px;
+}
+
+#submit {
+    padding-right: 40px;
+    padding-left: 18px;
 }
 
 a:link{
@@ -60,12 +72,16 @@ a:hover {
 	top:1px;
 }
 
-div{
+div {
     padding: 22px;
     margin: 17%;
-    margin-top: 2%;
+    margin-top: 3%;
     border: ridge 4px #31d2de;
 	background: #7892c2;
+}
+
+.questionFormats{
+
 }
 
 p {
@@ -74,11 +90,12 @@ p {
 
 .promptUser {
     text-align: left;
+    margin: 3% 0;
 }
 
 strong {
     text-decoration: underline;
-    padding-right: 65px;
+    padding-right: 16px;
 }
 
 hr {
@@ -89,7 +106,7 @@ hr {
 }
 
 #question {
-    width: 55%;
+    width: 62%;
     font: 400 13.3333px Arial;
     resize: none;
     vertical-align: bottom;
