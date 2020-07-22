@@ -15,7 +15,7 @@ const takeSurvey_code = (req,res) => {
     db.query(sql1, [code], (err, results) => {
         if (err) throw err;
         else {
-            console.log('Data found');
+            console.log(results[0][0].survey_name+' Data found');
             obj = results[0][0].survey_name;
             //res.redirect('../survey');
         }
@@ -73,8 +73,8 @@ const get_offset = (req,res) => {
                 sum += totalQ[0][i].total_questions
             }
             //console.log(totalQ[0][1].total_questions); //[0][0].total_questions
-            console.log(sum);
-            ansTrack = sum +1;
+            console.log(sum); 
+            ansTrack = sum +1; //ansTrack is the number to start on.
             
         }
     });
@@ -98,11 +98,32 @@ const get_answers = (req,res) => {
     ansTrack++;
 }
 
+const send_result = (req,res) => {
+    var newAnswers = req.body;
+    console.log(newAnswers);
+    var localAnsTrack = ansTrack; //variable used inside this function only 
+    var i;
+    for(i = 0; i < newAnswers.length; i++){
+
+        let sql_result = "call BSA_Database.AddResult(?, ?, ?)";
+
+        db.query(sql_result,[newAnswers[i],code, localAnsTrack], (err, result) => {
+            if(err) throw err;
+            else{
+                console.log("Data Uploaded Successfully!... I hope :)")
+            }
+        })
+        localAnsTrack++;
+    }
+
+}
+
 
 module.exports = {
     takeSurvey_page,
     takeSurvey_code,
     get_answers,
     get_offset,
+    send_result,
     get_questions
 }
