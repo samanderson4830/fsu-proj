@@ -7,5 +7,7 @@ router.get('/survey', takeSurveyController.takeSurvey_code);
 router.get('/questions', takeSurveyController.get_questions);
 router.get('/answers', takeSurveyController.get_answers);
 router.get('/offset', takeSurveyController.get_offset);
+router.post('/sendResult', takeSurveyController.send_result);
+
 
 module.exports = router;
