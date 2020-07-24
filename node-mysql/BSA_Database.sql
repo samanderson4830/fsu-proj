@@ -58,14 +58,14 @@ CREATE TABLE IF NOT EXISTS `BSA_Database`.`answers`(
 
 )ENGINE = InnoDB;
 
-
 CREATE TABLE `BSA_Database`.`survey_results`(
+	`entry_ID`  INT NOT NULL AUTO_INCREMENT, 
     `taker_ID`  INT NOT NULL, 
     `survey_ID` INT NOT NULL,
     `answer_ID` INT NOT NULL,  
     `is_done`   BOOLEAN, 
     `date_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, 
-	KEY (`taker_ID`, survey_ID),
+	PRIMARY KEY (`entry_ID`),
     INDEX `idx.answer_ID` (answer_ID),
     CONSTRAINT `fk_answer_ID` 
     FOREIGN KEY(`answer_ID`) 
@@ -77,6 +77,7 @@ CREATE TABLE `BSA_Database`.`survey_results`(
 -------------------------------------------------------------------------------*/
 
 INSERT  INTO `customers`(`email`,`thePassword`,`company_name`, `first_name`, `last_name`) VALUES 
+# all of the registered customers
 ('HomeDepot123@gmail.com', 'Home123',       'Home Depot', 'Jamis', 'Winston'),
 ('Microsoft@gmail.com',    'Microsoft123',  'Microsoft',   NULL,    NULL),
 ('Wendys11@gmail.com',     'Wendys123',     'Wendys',      NULL,    NULL),
@@ -92,6 +93,7 @@ INSERT  INTO `customers`(`email`,`thePassword`,`company_name`, `first_name`, `la
 -------------------------------------------------------------------------------*/
 
 INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `total_questions`) VALUES
+# All of the created surveys note note all have questiions
 (1,  'Home Depot Performance Survey',   'Get some feedback about our Performance',                  2),
 (1,  'Home Depot Employee Survey',      'Get some feedback from our Employees',                     1),
 (2,  'Microsoft Vista Survey',          'Get some feedback about our product',                      1),
@@ -106,29 +108,38 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Questions Table
 -------------------------------------------------------------------------------*/
+
  INSERT INTO `questions`(`survey_ID`,`question_order`,`question_string`) VALUES
+ # questions(2) for survey 1
 (1,  1,  'How would you rate our performance today?'),
 (1,  2,  'Will you return to this Home Depot?'),
+
+ # questions(1) for survey 2
 (2,  1,  'Do you enjoy working at Home Depot'),
+
+ # questions(1) for survey 3
 (3,  1,  'Do you like windows vista??'),
-(4,  1,  'How much bacon do you estimate was on your burger (in lbs.)?'),
+
+ # questions(3) for survey 4
+(4,  1,  'There was a lot of bacon on my burger.'),
 (4,  2,  'Did you enjoy to burger?'),
-(4,  3,  'What else could the BACONATOR use to make it even better?');
+(4,  3,  'Rate the burger on a scale of 1 - 10 (10 being the best).');
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for Answers Table
 -------------------------------------------------------------------------------*/
  INSERT INTO `answers`(`question_ID`,`answer_string`, `answer_order`) VALUES
+ 
 -- Home Depot Performance Survey
 # Ans for Q1
-(1,    'Strongly Agree', 1),
-(1,    'Agree',          2),
-(1,    'Maybe',          3),
-(1,    'Disagree',       4),
+(1,    'Strongly Agree',          1),
+(1,    'Agree',                   2),
+(1,    'Disagree',                3),
+(1,    'Strongly Disagree',       4),
 
 # Ans for Q2
-(2,    'Yes',  1),
-(2,    'No',   2),
+(2,    'Yes',    1),
+(2,    'No',     2),
 
 -- Home Depot Employee Survey
 # Ans for Q1
@@ -137,27 +148,36 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
 
 -- Windows Vista Survey
 # Ans for Q1
-(4,    'Yes',           1),
-(4,    'No',            2),
+(4,    'Yes',     1),
+(4,    'No',      2),
 
 -- BACONATOR Review
 # Ans for Q1
-(5,    'less than 1lb', 1),
-(5,    '1lb - 2lb'    , 2),
-(5,    'more than 3lb', 3),
+(5,    'True',    1),
+(5,    'False',   2),
 
 # Ans for Q2
-(6,    'Yes',          1),
-(6,    'No',           2),
+(6,    'Yes',     1),
+(6,    'No',      2),
 
 # Ans for Q3
-(7,    'More Bacon!',          1),
-(7,    'Nothing its great!',   2);
+(7,    '1',       1),
+(7,    '2',       2),
+(7,    '3',       3),
+(7,    '4',       4),
+(7,    '5',       5),
+(7,    '6',       6),
+(7,    '7',       7),
+(7,    '8',       8),
+(7,    '9',       9),
+(7,    '10',      10);
+
 
 /*-----------------------------------------------------------------------------
 -- Creating Default temporay Data for survey_results Table
 -------------------------------------------------------------------------------*/
  INSERT INTO `survey_results`(`taker_ID`,`survey_ID`,`answer_ID`, `is_done`) VALUES
+ 
 -- Home Depot Performance Survey Answers / Has (2) questions
 (1,      1,     2,     NULL),  # new taker 1
 (1,      1,     6,     true),
@@ -191,60 +211,74 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
 /*-----------------------------------------------------------------------------
 --  PROCEDUREs for customer table
 -------------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetCustomersAll`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetCustomersAll` ()
 BEGIN
+
 	SELECT * 
     FROM customers;
-END$$
+    
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetCustomersByID`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetCustomersByID` (IN cID INT)
 BEGIN
+
    SELECT * 
    FROM customers 
    WHERE customer_ID = cID;
-END$$
+   
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetCustomersByName`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetCustomersByName` (IN cName VARCHAR(100) )
 BEGIN
+
    SELECT * 
    FROM customers 
    WHERE company_name = cName;
-END$$
+   
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetCustomersByEmail`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetCustomersByEmail` (IN cEmail VARCHAR(100) )
 BEGIN
+
    SELECT * 
    FROM customers 
    WHERE email = cEmail;
-END$$
+   
+END $$
 
 DELIMITER ;
+
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `AddCompany`;
 
 DELIMITER $$
@@ -253,87 +287,103 @@ CREATE PROCEDURE `AddCompany` (IN cEmail VARCHAR(100), IN cPassword VARCHAR(45),
 						       IN cName VARCHAR(100),  IN fName VARCHAR(100),
                                IN lName VARCHAR(100) )
 BEGIN
+
    INSERT INTO customers (Email, thePassword, company_name, first_name, last_name) 
    VALUES (cEmail, cPassword, cName, fName, lName);
-END$$
+   
+END $$
 
 DELIMITER ;
+
 /*-----------------------------------------------------------------------------
 --  PROCEDUREs for surveys_created table
 -------------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetSurveyByID`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetSurveyByID` (IN sID INT)
 BEGIN
+
    SELECT * 
    FROM surveys_created 
    WHERE survey_ID = sID;
-END$$
+   
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetSurveyCustomerByID`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetSurveyCustomerByID` (IN cID INT)
 BEGIN
+
    SELECT * 
    FROM surveys_created
    WHERE customer_ID = cID;
-END$$
+   
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetDescription`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetDescription` (IN sID INT)
 BEGIN
+
    SELECT quick_description 
    FROM surveys_created 
    WHERE survey_ID = sID;
-END$$
+   
+END $$
 
 DELIMITER ;
+
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetTotalQuestions`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetTotalQuestions` (IN sID INT)
 BEGIN
+
    SELECT total_questions 
    FROM surveys_created 
    WHERE survey_ID = sID;
    
-END$$
+END $$
 
 DELIMITER ;
 
-
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetOffset`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetOffset` (IN sID INT)
 BEGIN
+
    SELECT total_questions 
    FROM surveys_created 
    WHERE survey_ID < sID;
    
-END$$
+END $$
 
 DELIMITER ;
 
-
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `AddSurvey`;
 
 DELIMITER $$
@@ -344,148 +394,165 @@ BEGIN
    INSERT INTO surveys_created (customer_ID, survey_name, quick_description, total_questions) 
    VALUES (cID, sName, qd , total);
    
-END$$
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------
 --  PROCEDUREs for questions table
 -------------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetSurveyQuestion`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetSurveyQuestions` (IN sID INT)
 BEGIN
+
    SELECT question_string
    FROM questions 
    WHERE survey_ID = sID;
    
-END$$
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetSurveyAnswers`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetSurveyAnswers` (IN qID INT)
 BEGIN
+
    SELECT answer_string
    FROM answers 
    WHERE answers.question_ID = qID;
-END$$
+   
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetQuestionNumber`;
 
 DELIMITER $$
-USE `BSA_Database`$$
+USE `BSA_Database` $$
 CREATE PROCEDURE `GetQuestionNumber` (IN qID INT)
 BEGIN
+
    SELECT question_order 
    FROM questions 
    WHERE question_ID = qID; 
  
-END$$
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `AddQuestions`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `AddQuestions` (IN sID INT, IN qOrder INT, IN qString VARCHAR(250) )
 BEGIN
+
     INSERT INTO questions (survey_ID, question_order, question_string) 
     VALUES (sID, qOrder, qString);
     
-END$$
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------
 --  PROCEDUREs for answers table
 -------------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetAnswersByQuestionID`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetAnswersByQuestionID` (IN qID INT)
 BEGIN
+
    SELECT * 
    FROM answers 
    WHERE question_ID = qID; 
  
-END$$
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetAnswerStringByID`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetAnswerStringByID` (IN aID INT)
 BEGIN
+
    SELECT answer_string 
    FROM answers 
    WHERE answer_ID = aID; 
  
-END$$
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `AddAnswer`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `AddAnswer` (IN qID INT, IN aOrder INT, IN aString VARCHAR(100) )
 BEGIN
+
    INSERT INTO answers (question_ID, answer_order, answer_string) 
    VALUES (qID, aOrder, aString);
  
-END$$
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------
 --  PROCEDUREs for survey_results table
 -------------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `GetResultsFromTaker`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `GetResultsFromTaker` (IN tID INT)
 BEGIN
+
    SELECT * 
    FROM survey_results 
    WHERE taker_ID = tID; 
  
-END$$
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `AddResult`;
 
 DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `AddResult` (IN ans_string VARCHAR(100), IN sID INT, IN qID INT) 
-
 BEGIN
 	
    DECLARE done BOOLEAN DEFAULT NULL;
-   DECLARE tID INT DEFAULT SetTakerID ();
+   DECLARE tID INT DEFAULT SetTakerID (sID);
    DECLARE aID INT DEFAULT FindAnswerID(ans_string, qID);
    
    # check if survey is done 
-		IF IsSurveyFinished (qID, aID) = TRUE THEN
+		IF IsSurveyFinished (qID, sID) = TRUE THEN
 			SET done = TRUE; 
 		END IF;
         
@@ -497,18 +564,20 @@ BEGIN
    
    SET FOREIGN_KEY_CHECKS=1;
  
-END$$
+END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------
 --  All Functions 
 -------------------------------------------------------------------------------*/
+
 DROP FUNCTION IF EXISTS `ValidLogin`;
 
 DELIMITER $$
 CREATE FUNCTION `ValidLogin` (cEmail VARCHAR(100) ) RETURNS BOOL DETERMINISTIC
 BEGIN
+
       # variables 
       DECLARE is_valid BOOLEAN DEFAULT FALSE;  # email exists flag
       DECLARE email_count INT DEFAULT 0;       # email count will be 1 if true
@@ -524,16 +593,19 @@ BEGIN
             END IF;
 
       RETURN is_valid;
+      
 END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP FUNCTION IF EXISTS `FindQuestionID`;
 
 DELIMITER $$
 CREATE FUNCTION `FindQuestionID` (aID INT) RETURNS INT DETERMINISTIC
 BEGIN
+
 	  # variables 
       DECLARE qID INT DEFAULT -1;
       
@@ -544,18 +616,19 @@ BEGIN
             
 	  # if not found retuns -1
       RETURN qID;
+      
 END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
--- Temporarly not used
 
 DROP FUNCTION IF EXISTS `TotalQuestions`;
 
 DELIMITER $$
 CREATE FUNCTION `TotalQuestions` (sID INT) RETURNS INT DETERMINISTIC
 BEGIN
+
       # variables 
       DECLARE total INT DEFAULT -1;
       
@@ -566,16 +639,19 @@ BEGIN
 		
 	  # total num of questions in a survey
       RETURN total;
+      
 END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP FUNCTION IF EXISTS `IsSurveyFinished`;
 
 DELIMITER $$
 CREATE FUNCTION `IsSurveyFinished` (qID INT, sID INT)  RETURNS BOOL DETERMINISTIC
 BEGIN
+
 	  # variables 
       DECLARE total INT DEFAULT totalQuestions (sID); # set total to total number of question in a survey
       DECLARE num INT DEFAULT -1; 
@@ -592,16 +668,19 @@ BEGIN
 			END IF;
       
       RETURN done;
+      
 END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP FUNCTION IF EXISTS `TotalSurveys`;
 
 DELIMITER $$
 CREATE FUNCTION `TotalSurveys` (cID INT) RETURNS INT DETERMINISTIC
 BEGIN
+
       # variables 
       DECLARE total INT DEFAULT -1;
       
@@ -611,11 +690,13 @@ BEGIN
             
 	  # total num of surveys from a customer
       RETURN total;
+      
 END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP FUNCTION IF EXISTS `TakenSurvey`;
 
 #**************************************
@@ -625,6 +706,7 @@ DROP FUNCTION IF EXISTS `TakenSurvey`;
 DELIMITER $$
 CREATE FUNCTION `TakenSurvey` (sID INT) RETURNS INT DETERMINISTIC
 BEGIN
+
       # variables 
       DECLARE total INT DEFAULT -1;
    
@@ -635,21 +717,23 @@ BEGIN
       SET total =  total / TotalQuestions (sID) ;     
 	  # total num of surveys from a customer
       RETURN total;
+      
 END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP FUNCTION IF EXISTS `PickedChoice`;
 
 DELIMITER $$
 CREATE FUNCTION `PickedChoice` (aID INT, sID INT) RETURNS DOUBLE DETERMINISTIC
 BEGIN
+
       # variable must be a double
       DECLARE total DOUBLE DEFAULT -1;
       DECLARE d DOUBLE DEFAULT TakenSurvey (sID);
       
-
             SELECT COUNT(taker_ID) INTO total
             FROM  `survey_results`
             WHERE answer_ID = aID;
@@ -657,11 +741,13 @@ BEGIN
       SET total =  total / d;     
 	  # precent of survey takers that selected an answer
       RETURN total;
+      
 END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP FUNCTION IF EXISTS `SetTakerID`;
 
 #**************************************
@@ -669,37 +755,67 @@ DROP FUNCTION IF EXISTS `SetTakerID`;
 #**************************************
 
 DELIMITER $$
-CREATE FUNCTION `SetTakerID` () RETURNS INT DETERMINISTIC
+CREATE FUNCTION `SetTakerID` (sID INT) RETURNS INT DETERMINISTIC
 BEGIN
-      # variable must be a double
-      DECLARE tID INT DEFAULT -1;
-      DECLARE done BOOL DEFAULT NULL;
+		
+      DECLARE eID INT DEFAULT -1;   
+	  DECLARE tID INT DEFAULT 0;  
+      DECLARE done BOOL DEFAULT  TakenSurvey(sID);
       
-	  SELECT MAX(taker_ID) INTO tID FROM survey_results LIMIT 1 ;
-      SELECT MAX(is_done) INTO done FROM survey_results WHERE tID;
+      #***********************************
+	  # find the last entryID
       
-      IF done = 1 THEN
+	  SELECT MAX(entry_ID) INTO eID 
+      FROM survey_results 
+      LIMIT 1 ;
+      
+	 #***********************************
+     # get prev. taker_ID
+      
+      SELECT taker_ID INTO tID
+      FROM survey_results 
+      WHERE entry_ID = eID;
+      
+      #***********************************
+      # get is_done value
+      
+      SELECT is_done INTO done 
+      FROM survey_results 
+      WHERE entry_ID = eID;
+      
+      #***********************************
+      # if the last is_done is true the its a new taker
+      # otherwise same taker dont change taker_ID
+      
+      IF (done = TRUE) THEN
 			SET tID = tID + 1;
       END IF;
 
       RETURN tID;
+      
 END $$
 
 DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
+
 DROP FUNCTION IF EXISTS `FindAnswerID`;
+
+#**************************************
+# Helper function for AddResult       *
+#**************************************
 
 DELIMITER $$
 CREATE FUNCTION `FindAnswerID` (ans_string VARCHAR (30), qID INT) RETURNS INT DETERMINISTIC
 BEGIN
+
    # a question_ID will a have a set of associated answer_strings where it can
-   # be reasonably assumed that all answer_strings would be unique
+   # be reasonably assumed that all answer_strings(within that set) would be unique
    
    DECLARE a VARCHAR (30) DEFAULT ans_string; 
    DECLARE aID INT  DEFAULT 0; 
 	
-   SELECT answer_ID INTO aID 
+   SELECT MAX(answer_ID) INTO aID 
    FROM  answers 
    WHERE question_ID = qID
    LIMIT 1;
@@ -716,9 +832,10 @@ BEGIN
 			SET aID = aID - 1;
 		END IF;
         
-	END LOOP;
+   END LOOP;
    
-      RETURN aID;
+   RETURN aID;
+      
 END $$
 
 DELIMITER ;
