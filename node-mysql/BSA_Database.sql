@@ -384,6 +384,23 @@ DELIMITER ;
 
 /*-----------------------------------------------------------------------------*/
 
+DROP PROCEDURE IF EXISTS `SetTotalQuestions`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `SetTotalQuestions` (IN sID INT)
+BEGIN
+
+	UPDATE surveys_created 
+	SET total_questions = TotalQuestions (sID)
+    WHERE survey_ID = sID;
+   
+END $$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `AddSurvey`;
 
 DELIMITER $$
@@ -446,6 +463,23 @@ BEGIN
    SELECT question_order 
    FROM questions 
    WHERE question_ID = qID; 
+ 
+END $$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+
+DROP PROCEDURE IF EXISTS `GetQuestionID`;
+
+DELIMITER $$
+USE `BSA_Database` $$
+CREATE PROCEDURE `GetQuestionID` (IN q_string VARCHAR(250))
+BEGIN
+
+   SELECT question_ID 
+   FROM questions 
+   WHERE question_string = q_string; 
  
 END $$
 
