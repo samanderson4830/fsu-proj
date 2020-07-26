@@ -602,6 +602,31 @@ END $$
 
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `ValidLogin`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `ValidLogin` (IN inputEmail VARCHAR(100), IN inputPass VARCHAR(100), OUT valid BOOL)
+BEGIN
+   IF LoginMatch(inputEmail, inputPass) IS NOT NULL
+		THEN SET valid = 1;
+   ELSE SET valid = 0;
+   END IF;
+END$$
+
+DROP PROCEDURE IF EXISTS `Login`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `Login` (IN inputEmail VARCHAR(100), IN inputPass VARCHAR(100))
+BEGIN
+	CALL ValidLogin(inputEmail, inputPass, @valid);
+	SELECT @valid AS isValidLogin;
+END$$
+
+DELIMITER ;
+
+
 /*-----------------------------------------------------------------------------
 --  All Functions 
 -------------------------------------------------------------------------------*/
@@ -870,6 +895,25 @@ BEGIN
    
    RETURN aID;
       
+END $$
+
+DELIMITER ;
+
+DROP FUNCTION IF EXISTS `LoginMatch`;
+
+DELIMITER $$
+CREATE FUNCTION `LoginMatch` (inputEmail VARCHAR(100), inputPass VARCHAR(100)) RETURNS VARCHAR(100) DETERMINISTIC
+BEGIN
+
+	DECLARE pwd VARCHAR(100);
+	SELECT thePassword INTO pwd
+    FROM 
+	(
+		SELECT * FROM CUSTOMERS 
+        WHERE CUSTOMERS.email = InputEmail
+	) AS userPass
+    WHERE thePassword = inputPass;
+	RETURN pwd;
 END $$
 
 DELIMITER ;
