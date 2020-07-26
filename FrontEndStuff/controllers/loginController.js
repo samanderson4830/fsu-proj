@@ -15,7 +15,7 @@ const login_new = function(req, res) {
     db.query("CALL GetCustomersByEmail(?)", [emailInput], function(err, result){
         if(err) throw err;
         else {
-            // console.log(result[0]); test result
+            //console.log(result[0]); //test result (see if company data is correct)
             //these three variable are defined globally in app.js and then defined with data grabbed from results
             companyName = result[0][0].company_name.toString();
             fullName = result[0][0].first_name + " " + result[0][0].last_name;
@@ -28,6 +28,7 @@ const login_new = function(req, res) {
                     //Creating an empty array to push whatever amount of surveys account has
                     surveyDescriptions = [];
                     surveyNames = [];
+                    //console.log(result[0]); //test result (see what surveys are spit out)
                     result[0].forEach(function(survey){
                         surveyNames.push(survey.survey_name);
                         surveyDescriptions.push(survey.quick_description);

@@ -80,10 +80,6 @@ div {
 	background: #7892c2;
 }
 
-.questionFormats{
-
-}
-
 p {
     padding: 10px;
 }
@@ -111,11 +107,6 @@ hr {
     resize: none;
     vertical-align: bottom;
 }
-
-#promptQuestion {
-
-}
-
 
 .submitButton {
 	box-shadow:inset 0px -1px 3px 0px #91b8b3;

@@ -26,7 +26,10 @@ var newSurveyTitle;
 var newSurveyDescription;
 //creating variable for add Questions ejs file
 var addingToSurvey;
-var format;
+var formatForQuestion;
+var questionString;
+var questionID;
+var surveyID;
 
 //register view engine
 app.set('view engine', 'ejs');

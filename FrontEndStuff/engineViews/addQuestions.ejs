@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="author" content="FrontEnd-BSA">
     <title>BSA | Add Some Questions</title>
+    <!-- Link to add questions script -->
+    <script defer src="addQuestions.js"></script>
     <!-- Including a hosted copy of jQuery library for use in CSS and Javascript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <!--Links the css style sheet-->
@@ -29,7 +31,7 @@
     <h2> 
         <p class="titleForPage">Add Questions</p> 
         <p class="titleForPage">to</p> 
-        <p class="titleForPage"><%= addingToSurvey = "Home Depot Hydro Plung Rev" %></p> 
+        <p class="titleForPage"><%= addingToSurvey%></p> 
     </h2>
     <div>
         <form action="/addQuestions/addQuestion" method="POST">
@@ -53,9 +55,9 @@
             </p>
         </form>
         <!-- Button that will discontinue adding questions to survey, and will then reset addingToSurvey variable -->
-        <button onclick="window.location.href = 'busOwn';"  class = "submitButton">
-            Click Here To Finish Adding Questions
-        </button>
+        <form action="/addQuestions/finish" method="POST">
+            <input type="submit" id="doneAdding"class = "submitButton" value="Click Here To Finish Adding Questions">
+        </form>
 
     </div>
 

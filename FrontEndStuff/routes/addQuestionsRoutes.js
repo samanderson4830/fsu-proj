@@ -7,4 +7,6 @@ router.get('/', addQuestionsController.add_page);
 
 router.post('/addQuestion', addQuestionsController.add_question);
 
+router.post('/finish', addQuestionsController.add_finish);
+
 module.exports = router;
