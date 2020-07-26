@@ -119,6 +119,21 @@ app.get ('/getCustomersByEmail/:email',(req, res) => {
     });
 });
 
+//Testing Procedure to get Valid Login
+app.get ('/validLogin/:email/:password',(req, res) => {
+    var customerEmail = req.params.email
+    var customerPass = req.params.password
+    let sql = `CALL Login('${customerEmail}','${customerPass}')`;   
+    db.query (sql, (err, result) => {
+        if (err) throw err;
+        else {
+            console.log("Data found .....");
+            console.log(result);
+           res.send(result);
+        }
+    });
+});
+
 
 
 
