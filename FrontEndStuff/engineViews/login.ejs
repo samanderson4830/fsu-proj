@@ -40,11 +40,11 @@
     <form action ="/Login/goLogin", method="POST">
         <p>
             <label for="email">Email:</label>
-            <input name="email" id="email" type="email" placeholder="user@domain.com" required>        
+            <input name="email" id="email" type="email" placeholder="user@domain.com" maxlength="99" required>        
         </p>
         <p>
             <label for="code">Password:</label>
-            <input name="code" id="code" type="password" placeholder="************" required>        
+            <input name="code" id="code" type="password" placeholder="************" maxlegnth="44" required>        
         </p>
         <!-- Submit button/input will send all data to server when backends figured out 
         value attribute gives it a customizable name, onclick="window.location.href = 'busOwn';"-->

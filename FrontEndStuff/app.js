@@ -30,6 +30,8 @@ var formatForQuestion;
 var questionString;
 var questionID;
 var surveyID;
+//variable to keep track of valid login
+var validLogin = 0;
 
 //register view engine
 app.set('view engine', 'ejs');
