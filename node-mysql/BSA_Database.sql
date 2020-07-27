@@ -602,6 +602,10 @@ END $$
 
 DELIMITER ;
 
+/*-----------------------------------------------------------------------------
+--  PROCEDUREs for Login
+-------------------------------------------------------------------------------*/
+
 DROP PROCEDURE IF EXISTS `ValidLogin`;
 
 DELIMITER $$
@@ -612,7 +616,9 @@ BEGIN
 		THEN SET valid = 1;
    ELSE SET valid = 0;
    END IF;
-END$$
+END $$
+
+/*-----------------------------------------------------------------------------*/
 
 DROP PROCEDURE IF EXISTS `Login`;
 
@@ -622,10 +628,51 @@ CREATE PROCEDURE `Login` (IN inputEmail VARCHAR(100), IN inputPass VARCHAR(100))
 BEGIN
 	CALL ValidLogin(inputEmail, inputPass, @valid);
 	SELECT @valid AS isValidLogin;
-END$$
+END $$
 
 DELIMITER ;
 
+/*-----------------------------------------------------------------------------
+--  PROCEDUREs for Picked Choices
+-------------------------------------------------------------------------------*/
+
+DROP PROCEDURE IF EXISTS `GetPrecent`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetPrecent` (IN inputAnswerString VARCHAR(100), 
+							   IN inputQuestionString VARCHAR(250),
+							   IN inputSurveyID INT)
+BEGIN
+	CALL SetPrecent(inputAnswerString, inputQuestionString, inputSurveyID ,@precent);
+    SELECT @precent * 100 AS thePrecent;
+END $$
+
+/*-----------------------------------------------------------------------------*/
+
+DROP PROCEDURE IF EXISTS `SetPrecent`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `SetPrecent` (IN inputAnswerString VARCHAR(100), 
+                               IN inputQuestionString VARCHAR(250),
+							   IN inputSurveyID INT,
+                               OUT precent DOUBLE)
+BEGIN
+	DECLARE aID INT DEFAULT  0;
+    DECLARE qID INT DEFAULT 0;
+    
+    SELECT question_ID INTO qID
+    FROM questions
+    WHERE question_string = inputQuestionString;
+    
+    SET aID = FindAnswerID(inputAnswerString, qID);  
+    # SET aID = 5;
+    # if aID is 0 then answerID wasnt found
+    IF aID > 0 THEN
+		SET precent = PickedChoice(aID, inputSurveyID);
+    END IF;
+END $$
 
 /*-----------------------------------------------------------------------------
 --  All Functions 
@@ -899,7 +946,13 @@ END $$
 
 DELIMITER ;
 
+/*-----------------------------------------------------------------------------*/
+
 DROP FUNCTION IF EXISTS `LoginMatch`;
+
+#**************************************
+# Helper function for Login           *
+#**************************************
 
 DELIMITER $$
 CREATE FUNCTION `LoginMatch` (inputEmail VARCHAR(100), inputPass VARCHAR(100)) RETURNS VARCHAR(100) DETERMINISTIC
