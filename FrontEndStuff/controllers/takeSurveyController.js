@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const db = require('../models/db_connection');
 
 var code = 0;
-let questionArray, answerArray, ansTrack;
+let questionArray, answerArray, ansTrack, localAnsTrack
 
 const takeSurvey_page = (req,res) => {
     res.render('TakeSurvey');
@@ -75,6 +75,7 @@ const get_offset = (req,res) => {
             //console.log(totalQ[0][1].total_questions); //[0][0].total_questions
             console.log(sum); 
             ansTrack = sum +1; //ansTrack is the number to start on.
+            localAnsTrack = sum+1
             
         }
     });
@@ -101,7 +102,7 @@ const get_answers = (req,res) => {
 const send_result = (req,res) => {
     var newAnswers = req.body;
     console.log(newAnswers);
-    var localAnsTrack = ansTrack; //variable used inside this function only 
+   // localAnsTrack = ansTrack; //variable used inside this function only
     var i;
     for(i = 0; i < newAnswers.length; i++){
 
@@ -111,9 +112,11 @@ const send_result = (req,res) => {
             if(err) throw err;
             else{
                 console.log("Data Uploaded Successfully!... I hope :)")
+                console.log(localAnsTrack)
+                localAnsTrack++
             }
         })
-        localAnsTrack++;
+        //localAnsTrack=localAnsTrack+1;
     }
 
 }
