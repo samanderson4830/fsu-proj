@@ -50,11 +50,16 @@
         the account -->
     <p class="surveyIntro" ><%= fullName %>,</p>
     <p class="surveyIntro">Here are your current surveys:</p>
+    <p id ="helpUser">(click on survey to see analytics for it)</p>
 
+<%  if (surveyNames.length === 0) { %>
+    <h3>NO SURVEYS</h3>
+<%  } %>
 <%  surveyNames.forEach(function(survey, index) { %>
     <div class = "currentSurvey">
-        <p> <strong> <%= survey %> </strong> </p>
+        <p> <strong> <%= survey.surveyName %> </strong> </p>
         <p> <%= surveyDescriptions[index]%> </p>
+        <p class="codeMessage"> To have someone complete <em>this</em> survey, they need to enter this code: <strong><%= survey.surveyCode %></strong> </p>
     </div>
 <%  }); %>
 

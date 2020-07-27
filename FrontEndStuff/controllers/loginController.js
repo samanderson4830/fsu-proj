@@ -39,11 +39,19 @@ const login_new = function(req, res) {
                                 //Creating an empty array to push whatever amount of surveys account has
                                 surveyDescriptions = [];
                                 surveyNames = [];
-                                //console.log(result[0]); //test result (see what surveys are spit out)
+                                console.log(result[0]); //test result (see what surveys are spit out)
                                 result[0].forEach(function(survey){
-                                    surveyNames.push(survey.survey_name);
+                                    //adding an object that stores survey's name and id
+                                    surveyNames.push({
+                                        surveyName: survey.survey_name,
+                                        surveyCode: survey.survey_ID
+                                    });
                                     surveyDescriptions.push(survey.quick_description);
-                                }); 
+                                });
+                                // surveyNames.forEach(function(survey) { //test that object is added and accessed correctly
+                                //     console.log(survey.surveyName);
+                                //     console.log(survey.surveyCode);
+                                // }); 
                             }
                         });
                         //After post request we redirect to businessOWnerLogin where variables are used on template
