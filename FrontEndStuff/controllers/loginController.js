@@ -13,8 +13,8 @@ const login_new = function(req, res) {
     let emailInput = req.body.email;
     let passwordInput = req.body.code;
 
-    console.log(req.body.email);
-    console.log(req.body.code);
+    // console.log(req.body.email);
+    // console.log(req.body.code);
 
     db.query("CALL Login(?, ?)", [emailInput, passwordInput], function (err, result){
         if (err) throw err;
@@ -39,7 +39,7 @@ const login_new = function(req, res) {
                                 //Creating an empty array to push whatever amount of surveys account has
                                 surveyDescriptions = [];
                                 surveyNames = [];
-                                console.log(result[0]); //test result (see what surveys are spit out)
+                                // console.log(result[0]); //test result (see what surveys are spit out)
                                 result[0].forEach(function(survey){
                                     //adding an object that stores survey's name and id
                                     surveyNames.push({

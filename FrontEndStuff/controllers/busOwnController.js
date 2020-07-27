@@ -4,24 +4,23 @@ const db = require('../models/db_connection');
 const { render } = require('ejs');
 
 const bus_own_page = (req,res) => {
-
     res.render('businessOwnerLogin');
 }
 
+const bus_own_analytics = function(req,res) {
+    //figuring out a way to get analyticsSurveyID out of script file and
+    // accessed in here
 
-// const login_new = (req, res) => {
-   
-//     Customer.findOne({ email: req.query['email']}, function(err, result){
-//         if(result == null) {
-//             res.redirect('/Login');
-//             //Need to popup "This email was not found" message hear
-//         } else {
-//             res.redirect('/busOwn');
-//         }
-//     });
-   
-// }
+    // res.send(analyticsSurveyID);
+    // db.query("CALL GetSurveyByID(?)", [analyticsSurveyID], function(err, result) {
+    //     if (err) throw err;
+    //     else {
+    //         console.log(result[0]); 
+    //     }
+    // });
+}
 
 module.exports = {
-    bus_own_page
+    bus_own_page,
+    bus_own_analytics
 }

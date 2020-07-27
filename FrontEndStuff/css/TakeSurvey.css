@@ -161,3 +161,14 @@ h3 {
 	text-align: left;
 	padding-left: 1.5%;
 }
+
+#analytics {
+	max-width: unset;
+    width: unset;
+    height: unset;
+    padding: unset;
+    background: unset;
+    border: unset;
+    border-radius: unset;
+    margin: unset;
+}

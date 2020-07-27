@@ -6,12 +6,14 @@
     <meta charset="UTF-8">
     <meta name="author" content="FrontEnd-BSA">
     <title>BSA | Owner Menu</title>
+    <!-- Link to script -->
+    <script defer src="busOwn.js"></script>
     <!-- Including a hosted copy of jQuery library for use in CSS and Javascript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-        <!--Links the css style sheet-->
-        <link rel="stylesheet" type ="text/css" href="TakeSurvey.css">
-        <!-- Links font grabbed from google -->
-        <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
+    <!--Links the css style sheet-->
+    <link rel="stylesheet" type ="text/css" href="TakeSurvey.css">
+    <!-- Links font grabbed from google -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
        
 </head>
 
@@ -51,16 +53,20 @@
     <p class="surveyIntro" ><%= fullName %>,</p>
     <p class="surveyIntro">Here are your current surveys:</p>
     <p id ="helpUser">(click on survey to see analytics for it)</p>
-
+<!-- if user doesn't have surveys this message will pop up -->
 <%  if (surveyNames.length === 0) { %>
     <h3>NO SURVEYS</h3>
 <%  } %>
+<!-- form post request that will be submitted when a tag that it's connected to is clicked -->
+<form id="analytics" method="POST" action="/busOwn/getAnalytics"></form>
 <%  surveyNames.forEach(function(survey, index) { %>
-    <div class = "currentSurvey">
-        <p> <strong> <%= survey.surveyName %> </strong> </p>
-        <p> <%= surveyDescriptions[index]%> </p>
-        <p class="codeMessage"> To have someone complete <em>this</em> survey, they need to enter this code: <strong><%= survey.surveyCode %></strong> </p>
-    </div>
+    <a class="surveyClicked" onclick="document.getElementById('analytics').submit();">
+        <div class = "currentSurvey">
+            <p> <strong> <%= survey.surveyName %> </strong> </p>
+            <p> <%= surveyDescriptions[index]%> </p>
+            <p class="codeMessage"> To have someone complete <em>this</em> survey, they need to enter this code: <strong><%= survey.surveyCode %></strong></p>
+        </div>
+    </a>
 <%  }); %>
 
     </div>

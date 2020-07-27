@@ -9,6 +9,7 @@ const busRoutes = require('./routes/busRoutes');
 const createSurveyRoutes = require('./routes/createSurveyRoutes');
 const takeSurveyRoutes = require('./routes/takeSurveyRoutes');
 const addQuestionsRoutes = require('./routes/addQuestionsRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
 
 //express app
 const app = express();
@@ -32,6 +33,9 @@ var questionID;
 var surveyID;
 //variable to keep track of valid login
 var validLogin = 0;
+//variable for analytics
+var analyticsSurveyID;
+var analyticsSurveyName;
 
 //register view engine
 app.set('view engine', 'ejs');
@@ -74,6 +78,9 @@ app.use('/registration', regRoutes);
 
 //business owner routes
 app.use('/busOwn', busRoutes);
+
+//analytics routes
+app.use('/analytics', analyticsRoutes);
 
 //create survey routes
 app.use('/createSurvey', createSurveyRoutes);
