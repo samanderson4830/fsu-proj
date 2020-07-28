@@ -8,16 +8,15 @@ const bus_own_page = (req,res) => {
 }
 
 const bus_own_analytics = function(req,res) {
-    //figuring out a way to get analyticsSurveyID out of script file and
-    // accessed in here
-
-    // res.send(analyticsSurveyID);
-    // db.query("CALL GetSurveyByID(?)", [analyticsSurveyID], function(err, result) {
-    //     if (err) throw err;
-    //     else {
-    //         console.log(result[0]); 
-    //     }
-    // });
+    //testing to see if variable for surveyID was passed correctly from busOwn script
+    // console.log(req.body.survey);
+    analyticsSurveyID = req.body.survey;
+    db.query("CALL GetSurveyByID(?)", [analyticsSurveyID], function(err, result) {
+        if (err) throw err;
+        else {
+            console.log(result[0]); 
+        }
+    });
 }
 
 module.exports = {

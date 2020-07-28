@@ -58,15 +58,15 @@
     <h3>NO SURVEYS</h3>
 <%  } %>
 <!-- form post request that will be submitted when a tag that it's connected to is clicked -->
-<form id="analytics" method="POST" action="/busOwn/getAnalytics"></form>
+<!-- <form id="analytics" method="POST" action="/busOwn/getAnalytics"></form> -->
+<!-- onclick="document.getElementById('analytics').submit();" -->
+<!-- <a class="surveyClicked" ></a> -->
 <%  surveyNames.forEach(function(survey, index) { %>
-    <a class="surveyClicked" onclick="document.getElementById('analytics').submit();">
         <div class = "currentSurvey">
             <p> <strong> <%= survey.surveyName %> </strong> </p>
             <p> <%= surveyDescriptions[index]%> </p>
             <p class="codeMessage"> To have someone complete <em>this</em> survey, they need to enter this code: <strong><%= survey.surveyCode %></strong></p>
         </div>
-    </a>
 <%  }); %>
 
     </div>
