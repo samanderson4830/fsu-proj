@@ -1000,7 +1000,7 @@ DELIMITER ;
 DROP FUNCTION IF EXISTS `QuestionStringToID`;
 
 #**************************************
-# Helper function for Login           *
+# Helper function for AddQuestion     *
 #**************************************
 
 DELIMITER $$
