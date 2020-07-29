@@ -4,9 +4,19 @@ $(".currentSurvey").click(function(){ //adding a click event listener with jQuer
     // console.log(selected); //testing to see if string was extracted successfully
     // console.log(selected.indexOf("1")); //testing to see where surveyID is in string
     // console.log(selected.length); //testing to see size of string
-    const gettingSurveyID = {
-        survey: Number(selected[selected.length - 10])
-    };
+    let doubleDigit = Number(selected[selected.length - 11]);
+    var gettingSurveyID;
+    if(Number.isInteger(doubleDigit)) {
+        doubleDigit *= 10;
+        gettingSurveyID = {
+            survey: (doubleDigit + (Number(selected[selected.length - 10])))
+        };
+    }
+    else {
+        gettingSurveyID = {
+            survey: Number(selected[selected.length - 10])
+        };
+    }
     // analyticsSurveyID = Number(selected[selected.length - 15]); //using difference between length and indexOf to find surveyID for <a> tag
     // console.log("analyticsSurveyID " + gettingSurveyID.survey); //testing ID value
     const jsonSurveyID = JSON.stringify(gettingSurveyID);

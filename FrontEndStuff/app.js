@@ -38,7 +38,9 @@ var analyticsSurveyID;
 var analyticsSurveyName;
 var analyticsQuestions;
 var analyticsQuestionIDs;
-var analyticsAnswers; //array of answer objects that'll have an aString property and an aPercent property
+//array of answer objects that'll have an aString property, an aPercent property, 
+//a qID property, a qString property, and a sID property.
+var analyticsAnswers;
 var analyticsObject;
 
 //register view engine
