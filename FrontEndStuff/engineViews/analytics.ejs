@@ -26,11 +26,23 @@
  </header>
 
  <h2>
+
     <p class="titleForPage">Analytics</p> 
     <p class="titleForPage">for</p> 
     <!-- Going to have javascript variable below -->
     <p class="titleForPage"> <%= analyticsSurveyName %> </p> 
 </h2>
+<%  analyticsSurveyQuestions.forEach(function(survey, index) { %>
+    <div class = "currentSurvey">
+        <p> <strong> <%= survey %> </strong> </p>
+        <%  analyticsAnswers.forEach(function(answer, count) { %>
+            <div class = "currentSurvey">
+                <p> <strong> <%= analyticsAnswers[count] %> </strong> </p>
+            </div>
+        <%  }); %>
+    </div>
+<%  }); %>
+
 
  <!--Copyright footer-->
  <%-include ('./footer')  %>
