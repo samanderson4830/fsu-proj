@@ -835,13 +835,18 @@ BEGIN
 
       # variable must be a double
       DECLARE total DOUBLE DEFAULT -1;
-      DECLARE d DOUBLE DEFAULT TakenSurvey (sID);
+      DECLARE taken DOUBLE DEFAULT TakenSurvey (sID);
       
             SELECT COUNT(taker_ID) INTO total
             FROM  `survey_results`
             WHERE answer_ID = aID;
             
-      SET total =  total / d;     
+      IF taken > 0 THEN      
+		SET total =  total / taken;  
+      ELSE 
+		SET total = 0;
+	  END IF;
+      
 	  # precent of survey takers that selected an answer
       RETURN total;
       
