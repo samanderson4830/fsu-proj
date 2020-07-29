@@ -36,6 +36,10 @@ var validLogin = 0;
 //variable for analytics
 var analyticsSurveyID;
 var analyticsSurveyName;
+var analyticsQuestions;
+var analyticsQuestionIDs;
+var analyticsAnswers; //array of answer objects that'll have an aString property and an aPercent property
+var analyticsObject;
 
 //register view engine
 app.set('view engine', 'ejs');
