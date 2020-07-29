@@ -493,9 +493,32 @@ DELIMITER $$
 USE `BSA_Database`$$
 CREATE PROCEDURE `AddQuestions` (IN sID INT, IN qOrder INT, IN qString VARCHAR(250) )
 BEGIN
+	DECLARE qID  INT DEFAULT 0 ;
 
     INSERT INTO questions (survey_ID, question_order, question_string) 
     VALUES (sID, qOrder, qString);
+    
+    SET qID = QuestionStringToID(qString);
+    CALL UpdateQuestionOrder (qID ,sID);
+    
+END $$
+
+DELIMITER ;
+/*-----------------------------------------------------------------------------*/
+
+DROP FUNCTION IF EXISTS `UpdateQuestionOrder`;
+
+#**************************************
+# Helper function for Login           *
+#**************************************
+
+DELIMITER $$
+CREATE PROCEDURE `UpdateQuestionOrder` (inputQuestionID INT, inputSurveyID INT) 
+BEGIN
+
+	UPDATE questions 
+    SET question_order = TotalQuestions (inputSurveyID)
+    WHERE survey_ID = inputSurveyID && question_ID = inputQuestionID;
     
 END $$
 
@@ -969,6 +992,27 @@ BEGIN
 	) AS userPass
     WHERE thePassword = inputPass;
 	RETURN pwd;
+END $$
+
+DELIMITER ;
+/*-----------------------------------------------------------------------------*/
+
+DROP FUNCTION IF EXISTS `QuestionStringToID`;
+
+#**************************************
+# Helper function for Login           *
+#**************************************
+
+DELIMITER $$
+CREATE FUNCTION `QuestionStringToID` (qString VARCHAR(100)) RETURNS INT DETERMINISTIC
+BEGIN
+	DECLARE qID INT;
+    
+	SELECT question_ID INTO qID
+    FROM questions
+    WHERE question_string = qString;
+    
+	RETURN qID;
 END $$
 
 DELIMITER ;
