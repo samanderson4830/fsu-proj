@@ -307,7 +307,7 @@ CREATE PROCEDURE `GetSurveyByID` (IN sID INT)
 BEGIN
 
    SELECT * 
-   FROM surveys_created 
+   FROM  surveys_created 
    WHERE survey_ID = sID;
    
 END $$
@@ -694,6 +694,26 @@ BEGIN
     END IF;
 END $$
 
+/*-----------------------------------------------------------------------------*/
+DROP PROCEDURE IF EXISTS `GetAnalytics`;
+
+DELIMITER $$
+USE `BSA_Database`$$
+CREATE PROCEDURE `GetAnalytics` (IN qString VARCHAR(100))
+
+BEGIN
+
+	DECLARE qID INT;
+    SET qID = QuestionStringToID(qString);
+    
+    SELECT answer_string
+    FROM answers
+    WHERE question_ID = qID;
+	
+-- 	CALL SetPrecent(inputAnswerString, inputQuestionString, inputSurveyID ,@precent);
+--     SELECT @precent * 100 AS thePrecent;
+    
+END $$
 /*-----------------------------------------------------------------------------
 --  All Functions 
 -------------------------------------------------------------------------------*/
@@ -995,6 +1015,7 @@ BEGIN
 END $$
 
 DELIMITER ;
+
 /*-----------------------------------------------------------------------------*/
 
 DROP FUNCTION IF EXISTS `QuestionStringToID`;
@@ -1013,6 +1034,28 @@ BEGIN
     WHERE question_string = qString;
     
 	RETURN qID;
+END $$
+
+DELIMITER ;
+
+/*-----------------------------------------------------------------------------*/
+
+DROP FUNCTION IF EXISTS `QuestionIDToString`;
+
+#**************************************
+# Helper function for AddQuestion     *
+#**************************************
+
+DELIMITER $$
+CREATE FUNCTION `QuestionIDToString` (qID INT) RETURNS VARCHAR(100) DETERMINISTIC
+BEGIN
+	DECLARE qString VARCHAR(100);
+    
+	SELECT question_string INTO qString
+    FROM questions
+    WHERE question_ID = qID;
+    
+	RETURN qString;
 END $$
 
 DELIMITER ;
