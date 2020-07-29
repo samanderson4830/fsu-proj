@@ -99,26 +99,24 @@ const get_answers = (req,res) => {
     ansTrack++;
 }
 
-const send_result = (req,res) => {
-    var newAnswers = req.body;
-    console.log(newAnswers);
-   // localAnsTrack = ansTrack; //variable used inside this function only
-    var i;
-    for(i = 0; i < newAnswers.length; i++){
-
-        let sql_result = "call BSA_Database.AddResult(?, ?, ?)";
-
-        db.query(sql_result,[newAnswers[i],code, localAnsTrack], (err, result) => {
-            if(err) throw err;
-            else{
-                console.log("Data Uploaded Successfully!... I hope :)")
-                console.log(localAnsTrack)
-                localAnsTrack++
-            }
-        })
-        //localAnsTrack=localAnsTrack+1;
+const send_result = (req,res) => 
+{    
+    // parms: (1) ans_string ... (2) survey_ID ... (3) question_ID
+    let sql_result = "CALL BSA_Database.AddResult(?, ?, ?)"; // MySQL query
+    for (var key in req.body) 
+    {
+        if (req.body.hasOwnProperty(key)) // has value then call query
+        {
+            db.query(sql_result,[req.body[key], code, localAnsTrack], (err, result) => 
+            {
+                if(err) 
+                {
+                    throw err;
+                } 
+            })
+            localAnsTrack++; // hold the question ID
+        }
     }
-
 }
 
 

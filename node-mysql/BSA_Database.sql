@@ -132,7 +132,7 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
  
 -- Home Depot Performance Survey
 # Ans for Q1
-(1,    'Strongly Agree',          1),
+(1,    'Strongly Agree',          1), 
 (1,    'Agree',                   2),
 (1,    'Disagree',                3),
 (1,    'Strongly Disagree',       4),
@@ -153,7 +153,7 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
 
 -- BACONATOR Review
 # Ans for Q1
-(5,    'True',    1),
+(5,    'True',    1),   # 11
 (5,    'False',   2),
 
 # Ans for Q2
@@ -161,12 +161,12 @@ INSERT INTO `surveys_created`(`customer_ID`,`survey_name`,`quick_description`, `
 (6,    'No',      2),
 
 # Ans for Q3
-(7,    '1',       1),
+(7,    '1',       1),  # 15
 (7,    '2',       2),
 (7,    '3',       3),
 (7,    '4',       4),
 (7,    '5',       5),
-(7,    '6',       6),
+(7,    '6',       6),  # 20
 (7,    '7',       7),
 (7,    '8',       8),
 (7,    '9',       9),
@@ -591,13 +591,10 @@ BEGIN
 		END IF;
         
    # if false done will remain null
-   SET FOREIGN_KEY_CHECKS=0;
-   
+    
    INSERT INTO survey_results (taker_ID, answer_ID, survey_ID, is_done) 
    VALUES (tID ,aID, sID, done);
-   
-   SET FOREIGN_KEY_CHECKS=1;
- 
+      
 END $$
 
 DELIMITER ;
@@ -912,13 +909,13 @@ DROP FUNCTION IF EXISTS `FindAnswerID`;
 #**************************************
 
 DELIMITER $$
-CREATE FUNCTION `FindAnswerID` (ans_string VARCHAR (30), qID INT) RETURNS INT DETERMINISTIC
+CREATE FUNCTION `FindAnswerID` (ans_string VARCHAR (100), qID INT) RETURNS INT DETERMINISTIC
 BEGIN
 
    # a question_ID will a have a set of associated answer_strings where it can
    # be reasonably assumed that all answer_strings(within that set) would be unique
    
-   DECLARE a VARCHAR (30) DEFAULT ans_string; 
+   DECLARE a VARCHAR (100) DEFAULT ans_string; 
    DECLARE aID INT  DEFAULT 0; 
 	
    SELECT MAX(answer_ID) INTO aID 
