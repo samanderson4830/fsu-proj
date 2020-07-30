@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="FrontEnd-BSA">
+    <title>BSA | Waiting</title>
+    <!-- Link to script -->
+    <!-- Including a hosted copy of jQuery library for use in CSS and Javascript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <!--Links the css style sheet-->
+    <link rel="stylesheet" type ="text/css" href="TakeSurvey.css">
+    <!-- Links font grabbed from google -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
+       
+</head>
+
+<header>
+
+    
+       <!-- Title header with business name, we can wrap this in an <a> tag to link to homepage -->
+        <a href="homePage"><h1>Business Survey Analytics</h1></a>
+        <!-- Four buttons that make up the navigation bar of the website-->
+        <button onclick="window.location.href = 'homePage';" class = "Button">
+            Logout
+        </button>
+        <!-- <button onclick="window.location.href = 'Login';"  class = "Button" >
+            Login
+        </button> -->
+        <button onclick="window.location.href = 'busOwn';"  class = "Button"  disabled>
+            Your Page
+        </button>
+        <!-- <button onclick="window.location.href = 'registration';" class = "Button">
+            New User
+        </button> -->
+        <hr>
+</header>
+
+<body>
+    
+<p>ESPERE POR FAVOR :P</p>
+
+<script>
+    var timer = setTimeout(function() {
+        window.location='http://localhost:3000/analytics'
+    }, 3000);
+</script>
+
+</body>
+</html>
+

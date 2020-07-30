@@ -32,12 +32,14 @@
     <!-- Going to have javascript variable below -->
     <p class="titleForPage"> <%= analyticsSurveyName %> </p> 
 </h2>
-<%  analyticsSurveyQuestions.forEach(function(survey, index) { %>
+<%  analyticsSurveyQuestions.forEach(function(question, index) { %>
     <div class = "currentSurvey">
-        <p> <strong> <%= survey %> </strong> </p>
+        <p> <strong> <%= question %> </strong> </p>
         <%  analyticsAnswers.forEach(function(answer, count) { %>
             <div class = "currentSurvey">
-                <p> <strong> <%= analyticsAnswers[count] %> </strong> </p>
+                <% if(question === answer.qString) { %>
+                    <p> <strong> <%= answer.aString %>  <%= answer.aPercent %> %</strong> </p>
+               <% } %>
             </div>
         <%  }); %>
     </div>
@@ -46,6 +48,5 @@
 
  <!--Copyright footer-->
  <%-include ('./footer')  %>
-    
 </body>
 </html>

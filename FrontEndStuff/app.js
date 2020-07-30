@@ -76,6 +76,11 @@ app.get('/homePage', (req, res) =>{
     res.render('homePage');
 })
 
+app.get('/waiting', (req, res) =>{
+
+    res.render('waiting');
+})
+
 //login routes
 app.use('/Login', loginRoutes);
 

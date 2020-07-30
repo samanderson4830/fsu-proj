@@ -62,11 +62,11 @@
 <!-- onclick="document.getElementById('analytics').submit();" -->
 <!-- <a class="surveyClicked" ></a> -->
 <%  surveyNames.forEach(function(survey, index) { %>
-        <div class = "currentSurvey">
+        <button onclick="window.location.href = 'waiting';" class = "currentSurvey">
             <p> <strong> <%= survey.surveyName %> </strong> </p>
             <p> <%= surveyDescriptions[index]%> </p>
             <p class="codeMessage"> To have someone complete <em>this</em> survey, they need to enter this code: <strong><%= survey.surveyCode %></strong></p>
-        </div>
+        </button>
 <%  }); %>
 
     </div>
