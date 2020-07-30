@@ -33,14 +33,15 @@
     <p class="titleForPage"> <%= analyticsSurveyName %> </p> 
 </h2>
 <%  analyticsSurveyQuestions.forEach(function(question, index) { %>
-    <div class = "currentSurvey">
-        <p> <strong> <%= question %> </strong> </p>
+    <div class = "currentQuestion">
+        <p class="questions"><strong> Question: <%=index + 1%> </strong></p>
+        <p class="actualQuestions"> <strong> <%= question %> </strong> </p>
         <%  analyticsAnswers.forEach(function(answer, count) { %>
-            <div class = "currentSurvey">
-                <% if(question === answer.qString) { %>
-                    <p> <strong> <%= answer.aString %>  <%= answer.aPercent %> %</strong> </p>
-               <% } %>
-            </div>
+            <% if(question === answer.qString) { %>
+                <div class = "currentAnswer">
+                    <p class="answers"><strong><%= answer.aString %> <em>Was Chosen:</em> <span><%= answer.aPercent %>%</span></strong> </p>
+                </div>
+            <% } %>
         <%  }); %>
     </div>
 <%  }); %>
