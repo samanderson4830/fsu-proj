@@ -709,10 +709,7 @@ BEGIN
     SELECT answer_string
     FROM answers
     WHERE question_ID = qID;
-	
-   CALL SetPrecent(inputAnswerString, inputQuestionString, inputSurveyID ,@precent);
-   SELECT @precent * 100 AS thePrecent;
-    
+
 END $$
 /*-----------------------------------------------------------------------------
 --  All Functions 
@@ -1057,5 +1054,4 @@ BEGIN
     
 	RETURN qString;
 END $$
--- 
-DELIMITER ;
+
