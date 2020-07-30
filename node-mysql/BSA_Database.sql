@@ -709,7 +709,7 @@ BEGIN
     SELECT answer_string
     FROM answers
     WHERE question_ID = qID;
-	   
+
 END $$
 /*-----------------------------------------------------------------------------
 --  All Functions 
@@ -1055,4 +1055,3 @@ BEGIN
 	RETURN qString;
 END $$
 
-DELIMITER ;
